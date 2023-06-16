@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.4em 1.5em;
+  background-color: var(--secondaryColor);
+  color: var(--fontColor);
+
+  max-width: 20em;
+  align-self: center;
+  border: 1px solid var(--buttonColor);
+  border-radius: 0.2em;
+  margin: 1em 0 0 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  border-color: transparent;
+
+  background-color: var(--buttonColor);
+  color: var(--primaryColor);
+}
+
+.button > svg {
+  width: 2em;
+  height: 2em;
+}
+
+.input {
+  padding: 0.5em 1em;
+  background-color: var(--primaryColor);
+  border: none;
+  border-bottom: 1px solid var(--terciaryColor);
+  margin: 0 0 0 0.5em;
+  color: var(--fontColor);
+}
+
+.divider {
+  border-bottom: 1px solid #77c2d455;
+  margin: 1em 0;
+}
+
+.message {
+  color: #e6dc52;
+}
+.input::placeholder {
+}
