@@ -5,7 +5,7 @@ import { Database } from '@/app/types/supabase'
 import styles from "./account.module.css"
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { EditIcon, SettingsIcon, SignOutIcon, UserIcon } from '../constants/constants'
+import { EditIcon, SaveIcon, SettingsIcon, SignOutIcon, UserIcon } from '../constants/constants'
 import Link from 'next/link'
 
 export default function AccountForm({ session }: { session: Session | null }) {
@@ -89,6 +89,9 @@ export default function AccountForm({ session }: { session: Session | null }) {
             <div className={styles.form}>
                 <h1 className={styles.form__title}>Perfil</h1>
                 <div className={styles.form__containerPhoto}>
+                    {editProfile && <button className={styles.form__EditIcon}>
+                        <EditIcon className=''/>
+                    </button>}
                     <div className={styles.form__picture}>
                         {avatar_url && <Image className={styles.fomr_photo} src={`${avatar_url}`} width={120} height={120} alt={`avatar from ${fullname}`} />}
                     </div>
@@ -96,13 +99,12 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 <div className={styles.form__container}>
                     {!editProfile && <h2 className={styles.form__containerName}>{fullname}</h2>}
                     {editProfile && <input
-                        className={styles.form__input}
+                        className={styles.form__input}                        
                         id="fullName"
                         type="text"
                         value={fullname || ''}
                         onChange={(e) => setFullname(e.target.value)}
                     />}
-                    <EditIcon className={styles.form__containerEditIcon} />
                 </div>
                 <div className={styles.form__container}>
                     {!editProfile && <h3 className={styles.form__username}>{username}</h3>}
@@ -129,22 +131,29 @@ export default function AccountForm({ session }: { session: Session | null }) {
                         onChange={(e) => setWebsite(e.target.value)}
                     />}
                 </div>
-
-                <div className={styles.containerButton} onClick={() => setEditProfile(prev => !prev)}>
-                    <UserIcon className={styles.buttonIcon} />
-                    <span className={styles.buttonTitle}>Editar mi perfil</span>
-                    <span className={styles.buttonSubtitle}>Actualiza tu información personal</span>
+                <form action="/auth/signout" method="post">
+                <div className={`${styles.containerButton} ${editProfile && styles.containerButtonPressed}`} onClick={() => setEditProfile(prev => !prev)}>
+                    {!editProfile && <UserIcon className={styles.buttonIcon} />}
+                    {editProfile && <SaveIcon className={styles.buttonIcon} />}
+                    <span className={styles.buttonTitle}>{!editProfile ? 'Editar mi perfil' : 'Guardar' }</span>
+                    <span className={styles.buttonSubtitle}>{!editProfile ? 'Actualiza tu información personal' : 'Guardar las modificaciones realizadas.'}</span>
                 </div>
-                <Link className={styles.containerButton} href={'/'}>
+                <Link className={styles.containerButton} href={'/links'}>
                     <SettingsIcon className={styles.buttonIcon} />
                     <span className={styles.buttonTitle}>Configuración</span>
                     <span className={styles.buttonSubtitle}>Modifica, añade tus enlaces y personaliza la apariencia de tu tarjeta</span>
                 </Link>
-                <Link className={styles.containerButton} href={'/auth/signout'}>
+                <div className={styles.containerButton}>
+                    <button className={styles.buttonForm} type="submit"> </button>
                     <SignOutIcon className={styles.buttonIcon} />
                     <span className={styles.buttonTitle}>Cerrar sesión</span>
                     <span className={styles.buttonSubtitle}>Salir de tu cuenta</span>
-                </Link>
+                   
+                </div>
+                
+                        
+                        </form>
+  
 
                 <div className={styles.form__buttons}>
                     <button
@@ -156,13 +165,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     </button>
 
 
-                    {/*<div>
-                        <form action="/auth/signout" method="post">
-                            <button className={`button block ${styles.form__button}`} type="submit">
-                                Cerrar sessión
-                            </button>
-                        </form>
-    </div>*/}
+                   
                 </div>
             </div>
         </div>

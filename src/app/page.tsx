@@ -1,8 +1,9 @@
 
+import Image from 'next/image'
 import AuthForm from './components/auth-form'
 import { Logo } from './constants/constants'
 import styles from './page.module.css'
-
+import ImageBack from '/src/assets/backimage.svg'
 
 
 
@@ -32,6 +33,7 @@ export default function Home() {
         <div className={styles.containerLogin}>
           <AuthForm />
         </div>
+        <Image className={styles.imageback} src={ImageBack} width={400} height={400} alt='image social media' />
       </section>
     </main>
   )
