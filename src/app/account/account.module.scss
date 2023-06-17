@@ -22,9 +22,27 @@
     }
 
     &__containerPhoto {
+        position: relative;
         padding: 0.4em;
         border: 4px solid var(--buttonColor);
         border-radius: 4em;
+    }
+
+    &__EditIcon {
+        position: absolute;
+        right: -0.5em;
+        bottom: 0.7em;
+        display: flex;
+        border: 2px solid var(--buttonColor);
+        background-color: var(--secondaryColor);
+        border-radius: 1em;
+        padding: 0.2em;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        
+        &:hover{
+            background-color: var(--terciaryColor);            
+        }
     }
 
     &__picture {
@@ -53,12 +71,7 @@
             color: var(--fontColor);
         }
 
-        &EditIcon {
-            position: absolute;
-            right: -0.5em;
-            top: -0.5em;
-            display: none;
-        }
+       
 
         &:hover>.form__containerEditIcon {
             display: flex;
@@ -88,20 +101,32 @@
         background-color: var(--secondaryColor);
         color: var(--fontColor);
         padding: 0.6em 0.8em;
-        border: 1px solid #a1a1a1;
+        border: 1px solid #a1a1a185;
         max-width: 15em;
         border-radius: 0 0.3em 0.3em 0;
+        outline: none;
+
+        &:focus{
+            box-shadow:  0 0 0 1px var(--buttonColor);
+        }
+
     }
+
+    
 
     &__textarea {
         background-color: var(--secondaryColor);
         color: var(--fontColor);
         padding: 0.6em 0.8em;
-        border: 1px solid #a1a1a1;
+        border: 1px solid #a1a1a185;
         width: 25em;
         height: 7em;
         max-width: 25em;
+        outline: none;
         border-radius: 0 0.3em 0.3em 0;
+        &:focus{
+            box-shadow:  0 0 0 1px var(--buttonColor);
+        }
     }
 
     &__input:disabled {
@@ -158,7 +183,11 @@
     }
 }
 
+
+
+
 .containerButton {
+    position: relative;
     display: grid;
     grid-template-columns: 4em 1fr;
     align-items: center;
@@ -167,16 +196,30 @@
     height: 6em;
     margin: 0.2em 0 0 0;
     padding: 1em 0;
+    border: 1px solid transparent;
     background-color: #a1a1a109;
     border-radius: 0.5em;
-    cursor: pointer;
     text-decoration: none;
     transition: all 0.25s ease-in-out;
-
+    cursor: pointer;
+    
     &:hover {
         background-color: #a1a1a122;
-
     }
+    
+    &Pressed{
+        background-color: #a1a1a122;
+        border-color: var(--buttonColor);
+    }
+}
+
+.buttonForm{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
 }
 
 .buttonIcon {
