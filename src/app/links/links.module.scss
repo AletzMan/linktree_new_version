@@ -1,0 +1,285 @@
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 1rem 0;
+    margin: 0 auto;
+    max-width: 30em;
+    height: calc(100vh - 4em);
+    background-color: var(--primaryColor);
+    border-radius: 0.3em;
+    border: 1px solid #8ba88e45;
+
+    &__nav {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: center;
+        padding: 0.5em;
+        gap: 0.4em;
+        width: 100%;
+        border-bottom: 1px solid #8ba88e75;
+    }
+
+    &__containerPhoto {
+        position: relative;
+        padding: 0.1em;
+        border: 2px solid var(--buttonColor);
+        border-radius: 4em;
+    }
+
+    &__picture {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.2em;
+        width: 2.5em;
+        height: 2.5em;
+        border-radius: 4em;
+        overflow: hidden;
+    }
+
+    &__photo {
+        border-radius: 3em;
+    }
+
+    &__backbutton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        width: 3em;
+        height: 3em;
+        padding: 0.2em;
+        border-radius: 2em;
+        border: none;
+        transition: all 0.25s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #CDCDCD15;
+        }
+    }
+
+    &__container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-self: end;
+        gap: 0.5em;
+    }
+
+    &__username {
+        color: var(--buttonColor);
+        font-weight: 400;
+    }
+}
+
+.iconLoading {
+    animation: animationLoading 1s ease-in-out infinite;
+}
+
+.textLoading {
+    font-size: 2em;
+
+}
+
+@keyframes animationLoading {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(359deg);
+    }
+}
+
+.link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: #888;
+
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        /* Ancho de la scrollbar */
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--terciaryColor);
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: var(--secondaryColor);
+        /* Color de la pista */
+    }
+
+    &__network {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--backgroundColor);
+        border: 1px solid transparent;
+        padding: 1em 0.5em 0.5em 0.5em;
+        width: 100%;
+        min-width: 20em;
+        margin: 0.5em 0;
+        border-radius: 0.2em;
+
+        &:hover {
+            background-color: var(--primaryColor);
+            border: 1px solid #81f38d98;
+
+            &>.link__editButton,
+            &>.link__deleteButton {
+
+                display: flex;
+            }
+        }
+    }
+
+    &__deleteButton {
+        display: none;
+        align-items: center;
+        position: absolute;
+        color: var(--buttonColor);
+        right: 0.15em;
+        top: 0.15em;
+        background-color: transparent;
+        transition: all 0.25s ease-in-out;
+        border-radius: 2em;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--fontColor);
+        }
+    }
+
+    &__editButton {
+        display: none;
+        align-items: center;
+        position: absolute;
+        color: var(--buttonColor);
+        right: 2.5em;
+        top: 0.15em;
+        background-color: transparent;
+        transition: all 0.25s ease-in-out;
+        border-radius: 2em;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--fontColor);
+        }
+    }
+
+    &__buttons {
+        position: sticky;
+        display: flex;
+        column-gap: 0.5em;
+        width: 100%;
+        padding: 0.5em 1em 0.5em 1em;
+
+    }
+
+    &__update {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        align-self: flex-end;
+        column-gap: 0.3em;
+        color: var(--fontColor);
+        background-color: var(--secondaryColor);
+        border: none;
+        border-radius: 0.2em;
+        cursor: pointer;
+        transition: all 0.25s ease-in-out;
+
+        &:hover {
+            background-color: var(--terciaryColor);
+        }
+
+        &Icon {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+    }
+
+    &__add {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        align-self: flex-start;
+        column-gap: 0.3em;
+        color: var(--fontColor);
+        background-color: var(--secondaryColor);
+        border: none;
+        border-radius: 0.2em;
+        cursor: pointer;
+        transition: all 0.25s ease-in-out;
+
+        &:hover {
+            background-color: var(--terciaryColor);
+        }
+
+        &Icon {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+    }
+
+}
+
+
+
+.modaladd {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #3b3b3b75;
+    backdrop-filter: blur(5px);
+
+    &__link {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1em;
+        padding: 1em;
+        width: 100%;
+        background-color: var(--backgroundColor);
+
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &__button {
+        padding: 0.4em 1em;
+        border: none;
+        border-radius: 0.2em;
+        background-color: var(--secondaryColor);
+        color: var(--fontColor);
+        transition: all 0.25s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--buttonColor);
+        }
+    }
+}

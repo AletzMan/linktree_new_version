@@ -1,70 +1,196 @@
+import { DevianLogo, DiscordLogo, DribbleLogo, FacebookLogo, FlickrLogo, InstagramLogo, LinkedInLogo, NullIcon, PinterestLogo, QuoraLogo, RedditLogo, SkypeLogo, SnapchatLogo, SoundCloudLogo, SpotifyLogo, SteamLogo, TelegramLogo, TikTokLogo, TumblrLogo, TwitchLogo, TwitterLogo, VimeoLogo, WhatsAppLogo, YoutubeLogo } from "./svg";
 
-
-export function GoogleIcon() {
-    return (
-        <svg width="32" height="32" viewBox="0 0 48 48">
-            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
-            <path fill="#FF3D00" d="m6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z" />
-            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
-            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
-        </svg>
-    )
-}
-
-export function LinkTreeLogo() {
-    return (
-        <svg width="24" height="24" viewBox="0 0 24 24">
-            <path fill="#e7a71d" d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037a.75.75 0 0 1-.646 1.353a5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353a5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037a.75.75 0 0 1-.354-1Z" />
-        </svg>
-    )
-}
-
-export function Logo() {
-    return (
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5em", background: "#EFEFEF10", padding: "0.5em 1em", borderRadius: "2em", border: "1px solid #c6de4145" }}>
-            <LinkTreeLogo />
-            <span>Link-Tree</span>
-        </div>
-    )
-}
-
-export function UserIcon({ className }: { className: string }) {
-    return (
-        <svg className={className} width="24" height="24" viewBox="0 0 256 256">
-            <path fill="currentColor" d="M234.38 210a123.36 123.36 0 0 0-60.78-53.23a76 76 0 1 0-91.2 0A123.36 123.36 0 0 0 21.62 210a12 12 0 1 0 20.77 12c18.12-31.32 50.12-50 85.61-50s67.49 18.69 85.61 50a12 12 0 0 0 20.77-12ZM76 96a52 52 0 1 1 52 52a52.06 52.06 0 0 1-52-52Z" />
-        </svg>
-    )
-}
-
-export function SettingsIcon({ className }: { className: string }) {
-    return (
-        <svg className={className} width="24" height="24" viewBox="0 0 32 32">
-            <path fill="currentColor" d="M16 11a5 5 0 1 0 0 10a5 5 0 0 0 0-10Zm-3 5a3 3 0 1 1 6 0a3 3 0 0 1-6 0Zm-.16 13.628c1.035.247 2.096.372 3.16.372a13.643 13.643 0 0 0 3.156-.375a1.478 1.478 0 0 0 1.13-1.276l.234-2.13a1.471 1.471 0 0 1 2.066-1.2l1.955.856a1.472 1.472 0 0 0 1.671-.345a14.245 14.245 0 0 0 3.156-5.443a1.478 1.478 0 0 0-.535-1.627l-1.729-1.275a1.481 1.481 0 0 1 .003-2.396l1.72-1.27a1.474 1.474 0 0 0 .537-1.63a14.199 14.199 0 0 0-3.157-5.443a1.48 1.48 0 0 0-1.674-.345l-1.946.856a1.483 1.483 0 0 1-2.067-1.2l-.236-2.12a1.476 1.476 0 0 0-1.147-1.283a15.123 15.123 0 0 0-3.127-.363a15.395 15.395 0 0 0-3.146.363a1.469 1.469 0 0 0-1.147 1.28l-.237 2.122a1.493 1.493 0 0 1-2.073 1.206l-1.946-.857a1.493 1.493 0 0 0-1.67.35a14.245 14.245 0 0 0-3.16 5.446a1.478 1.478 0 0 0 .536 1.625l1.725 1.272a1.488 1.488 0 0 1 0 2.397L3.167 18.47a1.477 1.477 0 0 0-.535 1.63a14.253 14.253 0 0 0 3.16 5.45a1.458 1.458 0 0 0 1.077.465c.203 0 .404-.042.591-.123l1.955-.859a1.485 1.485 0 0 1 2.065 1.2l.235 2.126a1.476 1.476 0 0 0 1.125 1.27Zm5.501-1.866a11.638 11.638 0 0 1-4.677 0l-.195-1.74a3.48 3.48 0 0 0-1.14-2.208a3.534 3.534 0 0 0-3.718-.6l-1.606.7a12.237 12.237 0 0 1-2.348-4.05l1.424-1.052a3.488 3.488 0 0 0 0-5.616L4.66 12.147a12.243 12.243 0 0 1 2.348-4.046l1.6.7a3.45 3.45 0 0 0 1.4.294a3.5 3.5 0 0 0 3.467-3.108l.194-1.747c.774-.15 1.56-.23 2.347-.24c.782.01 1.562.09 2.33.24l.186 1.74a3.48 3.48 0 0 0 1.137 2.216a3.525 3.525 0 0 0 3.727.6l1.6-.7a12.212 12.212 0 0 1 2.35 4.047l-1.423 1.046a3.48 3.48 0 0 0 0 5.62l1.422 1.05A12.273 12.273 0 0 1 25 23.901l-1.6-.7a3.473 3.473 0 0 0-4.866 2.81l-.193 1.75Z" />
-        </svg>
-    )
-}
-
-export function SignOutIcon({ className }: { className: string }) {
-    return (
-        <svg className={className} width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M4 12a1 1 0 0 0 1 1h7.59l-2.3 2.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l4-4a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76a1 1 0 0 0-.21-.33l-4-4a1 1 0 1 0-1.42 1.42l2.3 2.29H5a1 1 0 0 0-1 1ZM17 2H7a3 3 0 0 0-3 3v3a1 1 0 0 0 2 0V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-3a1 1 0 0 0-2 0v3a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3Z" />
-        </svg>
-    )
-}
-
-export function EditIcon({ className }: { className: string }) {
-    return (
-        <svg className={className}  width="26" height="26" viewBox="0 0 24 24">
-            <path fill="#e7a71d" d="M21.455 5.416a.75.75 0 0 1-.096.943l-9.193 9.192a.75.75 0 0 1-.34.195l-3.829 1a.75.75 0 0 1-.915-.915l1-3.828a.778.778 0 0 1 .161-.312L17.47 2.47a.75.75 0 0 1 1.06 0l2.829 2.828a.756.756 0 0 1 .096.118Zm-1.687.412L18 4.061l-8.518 8.518l-.625 2.393l2.393-.625l8.518-8.519Z" clip-rule="evenodd"/>
-            <path fill="#e7a71d" d="M19.641 17.16a44.4 44.4 0 0 0 .261-7.04a.403.403 0 0 1 .117-.3l.984-.984a.198.198 0 0 1 .338.127a45.91 45.91 0 0 1-.21 8.372c-.236 2.022-1.86 3.607-3.873 3.832a47.77 47.77 0 0 1-10.516 0c-2.012-.225-3.637-1.81-3.873-3.832a45.922 45.922 0 0 1 0-10.67c.236-2.022 1.86-3.607 3.873-3.832a47.75 47.75 0 0 1 7.989-.213a.2.2 0 0 1 .128.34l-.993.992a.402.402 0 0 1-.297.117a46.164 46.164 0 0 0-6.66.255a2.89 2.89 0 0 0-2.55 2.516a44.421 44.421 0 0 0 0 10.32a2.89 2.89 0 0 0 2.55 2.516c3.355.375 6.827.375 10.183 0a2.89 2.89 0 0 0 2.55-2.516Z"/>
-        </svg>
-    )
-}
-
-export function SaveIcon({ className }: { className: string }) {
-    return (
-        <svg className={className} width="32" height="32" viewBox="0 0 32 32">
-            <path fill="currentColor" d="m27.71 9.29l-5-5A1 1 0 0 0 22 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V10a1 1 0 0 0-.29-.71ZM12 6h8v4h-8Zm8 20h-8v-8h8Zm2 0v-8a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8H6V6h4v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6.41l4 4V26Z"/>
-        </svg>
-    )
-}
+export const SocialNetworks = [
+    {
+        name: 'Seleccione una aplicación',
+        logo: <NullIcon className="" />,
+        value: 0,
+        urlHolder: 'https://example.com/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Devian Art',
+        logo: <DevianLogo className="" />,
+        value: 1,
+        urlHolder: 'https://deviantart.com/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Discord',
+        logo: <DiscordLogo className="" />,
+        value: 2,
+        urlHolder: 'https://discord.gg/profile',
+        color1: '#FF0000',
+        color2: '#282828',
+    },
+    {
+        name: 'Dribbble',
+        logo: <DribbleLogo className="" />,
+        value: 3,
+        urlHolder: 'hhttps://dribbble.com/profile',
+        color1: '#FF0000',
+        color2: '#282828',
+    },
+    {
+        name: 'Facebook',
+        logo: <FacebookLogo className="" />,
+        value: 4,
+        urlHolder: 'https://facebook.com/profile',
+        color1: '#4267B2',
+        color2: '#000000',
+    },
+    {
+        name: 'Flickr',
+        logo: <FlickrLogo className="" />,
+        value: 5,
+        urlHolder: 'https://flickr.com/people/profile',
+        color1: '#4267B2',
+        color2: '#000000',
+    },
+    {
+        name: 'Instagram',
+        logo: <InstagramLogo className="" />,
+        value: 6,
+        urlHolder: 'https://instagram.com/profile',
+        color1: '#C13584',
+        color2: '#833AB4',
+    },
+    {
+        name: 'LinkedIn',
+        logo: <LinkedInLogo className="" />,
+        value: 7,
+        urlHolder: 'https://linkedin.com/in/profile',
+        color1: '#C13584',
+        color2: '#833AB4',
+    },
+    {
+        name: 'Pinterest',
+        logo: <PinterestLogo className="" />,
+        value: 8,
+        urlHolder: 'https://pinterest.com.mx/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Quora',
+        logo: <QuoraLogo className="" />,
+        value: 9,
+        urlHolder: 'https://quora.com/profile/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Reddit',
+        logo: <RedditLogo className="" />,
+        value: 10,
+        urlHolder: 'https://reddit.com/r/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Skype',
+        logo: <SkypeLogo className="" />,
+        value: 11,
+        urlHolder: 'https://join.skype.com/invite/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Snapchat',
+        logo: <SnapchatLogo className="" />,
+        value: 12,
+        urlHolder: 'https://snapchat.com/p/profile',
+        color1: '#000000',
+        color2: '#833AB4',
+    },
+    {
+        name: 'SoundCloud',
+        logo: <SoundCloudLogo className="" />,
+        value: 13,
+        urlHolder: 'https://soundcloud.com/profile',
+        color1: '#000000',
+        color2: '#833AB4',
+    },
+    {
+        name: 'Spotify',
+        logo: <SpotifyLogo className="" />,
+        value: 14,
+        urlHolder: 'https://open.spotify.com/user/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Steam',
+        logo: <SteamLogo className="" />,
+        value: 15,
+        urlHolder: 'https://steam.com/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Telegram',
+        logo: <TelegramLogo className="" />,
+        value: 16,
+        urlHolder: 'https://telegram.com/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'TikTok',
+        logo: <TikTokLogo className="" />,
+        value: 17,
+        urlHolder: 'https://tiktok.com/@profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Tumblr',
+        logo: <TumblrLogo className="" />,
+        value: 18,
+        urlHolder: 'https://tumblr.com/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Twitch',
+        logo: <TwitchLogo className="" />,
+        value: 19,
+        urlHolder: 'https://twitch.tv/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'Twitter',
+        logo: <TwitterLogo className="" />,
+        value: 20,
+        urlHolder: 'https://twitter.com/profile',
+        color1: '#1DA1F2',
+        color2: '#14171A',
+    },
+    {
+        name: 'Vimeo',
+        logo: <VimeoLogo className="" />,
+        value: 21,
+        urlHolder: 'https://vimeo.com/profile',
+        color1: '#1DA1F2',
+        color2: '#14171A',
+    },
+    {
+        name: 'WhatsApp',
+        logo: <WhatsAppLogo className="" />,
+        value: 22,
+        urlHolder: 'https://whatsapp.com/profile',
+        color1: '#E60023',
+        color2: '#FFFFFF',
+    },
+    {
+        name: 'YouTube',
+        logo: <YoutubeLogo className="" />,
+        value: 23,
+        urlHolder: 'https://youtube.com/profile',
+        color1: '#FF0000',
+        color2: '#282828',
+    },
+]
