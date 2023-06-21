@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import styles from './links.module.css'
 import { UserInfo, Network, TypeAlert, ConfigSnack } from '@/app/types/types'
-import { AddIcon, ArrowBackIcon, CloseIcon, DeleteIcon, EditIcon, LoadingIcon, Logo, SaveIcon, SettingsIcon, UpdateIcon } from '../constants/svg'
+import { AddIcon, ArrowBackIcon, CloseIcon, ColorIcon, DeleteIcon, EditIcon, LoadingIcon, Logo, SaveIcon, SettingsIcon, UpdateIcon } from '../constants/svg'
 import Link from 'next/link'
 import LinkNetworkEdit from '../components/ComboBox/LinkNetworkEdit'
 import SnackBar from '../components/SnackBar/SnackBar'
@@ -187,9 +187,24 @@ export default function EditLinks({ session }: { session: Session | null }) {
                     <button className={styles.link__add} onClick={() => HandleAddLink(true)}>
                         <AddIcon className='' />
                     </button>
-                    <button className={styles.link__update}>
-                        <SaveIcon className='' />
+                    <button className={styles.link__color}>
+                        <ColorIcon className={styles.link__colorIcon} />
                     </button>
+                    <div className={styles.link__settings}>
+                        <div className={styles.link__settingsOptions}>
+                            <input className={styles.link__settingsColor} type='color' />
+                            <span className={styles.link__settingsText}>Color Fondo</span>
+                        </div>
+                        <div className={styles.link__settingsOptions}>
+                            <input className={styles.link__settingsColor} type='color' />
+                            <span className={styles.link__settingsText}>Color Fuente</span>
+                        </div>
+                        <div className={styles.link__settingsOptions}>
+                            <input className={styles.link__settingsColor} type='color' />
+                            <span className={styles.link__settingsText}>Color Fuente</span>
+                        </div>
+                        <button className={styles.link__settingsSave} >Guardar</button>
+                    </div>
                 </div>
                 <div className={`${styles.card__link} ${styles.link}`}>
 

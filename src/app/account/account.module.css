@@ -172,10 +172,13 @@
   cursor: pointer;
 }
 .containerButton:hover {
-  background-color: #a1a1a135;
+  background-color: #d3d1d139;
 }
 .containerButton:hover > .buttonIcon {
   color: var(--fontAltColor);
+}
+.containerButton:hover > .buttonSubtitle {
+  color: #ecececef;
 }
 .containerButtonPressed {
   background-color: #a1a1a122;

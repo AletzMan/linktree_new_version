@@ -208,10 +208,14 @@
     cursor: pointer;
 
     &:hover {
-        background-color: #a1a1a135;
+        background-color: #d3d1d139;
 
         &>.buttonIcon {
             color: var(--fontAltColor);
+        }
+
+        &>.buttonSubtitle {
+            color: #ecececef;
         }
     }
 
