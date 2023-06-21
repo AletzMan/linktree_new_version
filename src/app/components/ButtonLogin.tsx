@@ -1,5 +1,5 @@
 'use-client'
-import { GoogleIcon } from '../constants/constants'
+import { GoogleIcon } from '../constants/svg'
 import styles from './components.module.css'
 import { Montserrat } from 'next/font/google'
 

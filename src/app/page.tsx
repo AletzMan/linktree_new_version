@@ -1,7 +1,7 @@
 
 import Image from 'next/image'
 import AuthForm from './components/auth-form'
-import { Logo } from './constants/constants'
+import { Logo } from './constants/svg'
 import styles from './page.module.css'
 import ImageBack from '/src/assets/backimage.svg'
 
