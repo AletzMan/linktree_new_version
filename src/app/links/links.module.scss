@@ -25,7 +25,7 @@
     &__containerPhoto {
         position: relative;
         padding: 0.1em;
-        border: 2px solid var(--buttonColor);
+        border: 2px solid var(--fontAltColor);
         border-radius: 4em;
     }
 
@@ -72,8 +72,9 @@
     }
 
     &__username {
-        color: var(--buttonColor);
+        color: var(--fontAltColor);
         font-weight: 400;
+        font-size: 1em;
     }
 }
 
@@ -131,7 +132,8 @@
         padding: 1em 0.5em 0.5em 0.5em;
         width: 100%;
         min-width: 20em;
-        margin: 0.5em 0;
+        margin: 0.15em 0;
+        transition: all 0.25s ease-in-out;
         border-radius: 0.2em;
 
         &:hover {
@@ -140,7 +142,6 @@
 
             &>.link__editButton,
             &>.link__deleteButton {
-
                 display: flex;
             }
         }
@@ -154,10 +155,13 @@
         right: 0.15em;
         top: 0.15em;
         background-color: transparent;
-        transition: all 0.25s ease-in-out;
+        //transition: all 0.25s ease-in-out;
         border-radius: 2em;
         border: none;
         cursor: pointer;
+        opacity: 0;
+        transform: scale(0);
+        animation: animationButtons 0.5s ease both;
 
         &:hover {
             color: var(--fontColor);
@@ -176,6 +180,9 @@
         border-radius: 2em;
         border: none;
         cursor: pointer;
+        opacity: 0;
+        transform: scale(0);
+        animation: animationButtons 0.5s ease both;
 
         &:hover {
             color: var(--fontColor);
@@ -243,24 +250,48 @@
 
 }
 
+@keyframes animationButtons {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 
 
 .modaladd {
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: #3b3b3b75;
     backdrop-filter: blur(5px);
 
+    &__title {
+        padding: 0.4em 1.1em;
+        margin: 0 0 1em 0;
+        background-color: #f8f8f810;
+        border-radius: 2em;
+        border: 1px solid #7ae78935;
+        color: var(--buttonColor);
+    }
+
     &__link {
         display: flex;
         flex-direction: column;
         row-gap: 1em;
         padding: 1em;
-        width: 100%;
+        width: 90%;
         background-color: var(--backgroundColor);
+        border: 1px solid #ebebeb25;
 
     }
 

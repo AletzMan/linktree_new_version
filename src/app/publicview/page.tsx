@@ -4,14 +4,19 @@ import { Session, createClientComponentClient } from '@supabase/auth-helpers-nex
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import styles from './publicview.module.css'
-import { UserInfo } from '@/app/types/types'
+import { Network, UserInfo } from '@/app/types/types'
 import { LoadingIcon } from '../constants/svg'
 
 //const newUser: UserInfo = {fullName: '', username: '', avatar_url: '', website: ''}
+const emptyLinks: Network = [
+    {
+        application: 0,
+        url: ''
+    }]
 export default function EditLinks({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
     const [loading, setLoading] = useState(true)
-    const [userData, setUserData] = useState<UserInfo>({ fullName: '', username: '', avatar_url: '', website: '' })
+    const [userData, setUserData] = useState<UserInfo>({ fullName: '', username: '', avatar_url: '', website: '', links: emptyLinks })
     const user = session?.user
 
     const getProfile = useCallback(async () => {
@@ -20,17 +25,17 @@ export default function EditLinks({ session }: { session: Session | null }) {
 
             let { data, error, status } = await supabase
                 .from('profiles')
-                .select(`full_name, username, website, avatar_url`)
+                .select(`full_name, username, website, avatar_url, links`)
                 .eq('id', user?.id)
                 .single()
 
             if (error && status !== 406) {
                 throw error
             }
-            console.log(data)
+            //console.log(data)
             if (data) {
                 const imgURL = session?.user?.user_metadata !== null ? session?.user.user_metadata.avatar_url : data?.avatar_url
-                setUserData({ fullName: data?.full_name, username: data?.username, avatar_url: imgURL, website: data?.website })
+                setUserData({ fullName: data?.full_name, username: data?.username, avatar_url: imgURL, website: data?.website, links: data?.links })
             }
         } catch (error) {
             alert('Error descargando los datos!')

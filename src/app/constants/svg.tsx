@@ -23,7 +23,7 @@ export function Logo() {
     return (
         <div style={{ display: "flex", alignItems: "center", gap: "0.5em", background: "#EFEFEF10", padding: "0.4em 0.8em", borderRadius: "2em", border: "1px solid #c6de4145" }}>
             <LinkTreeLogo />
-            <span>Link-Tree</span>
+            <h1 style={{ fontSize: '1em', fontWeight: '500' }}>Link-Tree</h1>
         </div>
     )
 }

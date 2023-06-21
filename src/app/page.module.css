@@ -13,40 +13,34 @@
   border: 1px solid #525252;
 }
 
-.imageback{
-  position: absolute;
-  top: 5em;
-  z-index: 0;
-  opacity: 0.03;
-}
-
 .section {
   display: flex;
   flex-direction: column;
   padding: 0.5em 0.8em 2em 0.8em;
-  background-color: var(--secondaryColor);
+  background: linear-gradient(var(--backgroundColor) 40%, var(--secondaryColor) 100%);
   height: 100%;
   margin: 0.5em 0 0 0;
+  border-radius: 0.2em;
 }
-
-.p {
+.section__presentation {
   margin: 0.5em 0 1em 0;
-  font-size: 0.9em;
+  font-size: 0.83em;
 }
-
-.start {
+.section__p {
+  margin: 0.5em 0 1em 0;
+  font-size: 0.83em;
+}
+.section__start {
   text-align: center;
-  color: var(--buttonColor);
+  color: var(--fontAltColor);
   margin: 0 0 0.5em 0;
 }
-
-.ul {
+.section__ul {
   padding: 0 1em 1em 2em;
-  font-size: 0.9em;
+  font-size: 0.83em;
   list-style: circle;
 }
-
-.button {
+.section__button {
   display: flex;
   align-items: center;
   gap: 0.5em;
@@ -61,14 +55,19 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-
-.button:hover {
+.section .button:hover {
   border: 1px solid var(--buttonColor);
 }
-
-.containerLogin {
+.section__containerLogin {
   background-color: var(--primaryColor);
   padding: 1em;
   margin: 0 2em;
   border-radius: 0.2em;
+  border: 1px solid #e7e6e635;
+}
+.section__imageback {
+  position: absolute;
+  top: 5em;
+  z-index: 0;
+  opacity: 0.03;
 }
