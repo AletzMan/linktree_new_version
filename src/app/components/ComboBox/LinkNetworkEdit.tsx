@@ -36,7 +36,6 @@ export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, 
             }}>
                 <InputLabel id="demo-simple-select-standard-label" sx={{
                     color: 'white',
-                    padding: '0 0.5em',
                     "&.Mui-focused": {
                         color: "var(--buttonColor)",
                     }
@@ -88,7 +87,7 @@ export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, 
                     sx={{
                         backgroundColor: "#DFDFDF12",
                         color: 'var(--fontColor)',
-                        padding: "0.2em 0.4em",
+                        padding: "0em 0.8em",
                         "& .MuiInput-input": {
                             color: "var(--fontColor)",
                             display: 'flex',
@@ -127,7 +126,7 @@ export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, 
                     sx={{
                         backgroundColor: '#DFDFDF12',
                         color: 'var(--fontColor)',
-                        padding: "0.2em 1em",
+                        padding: "0em 1em",
                         fontSize: '0.9em',
                         "&:after": {
                             borderBottomColor: "var(--buttonColor)",

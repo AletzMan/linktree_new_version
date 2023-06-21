@@ -1,0 +1,83 @@
+.main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin: 0 auto;
+    max-width: 30em;
+    height: 100%;
+    background-color: var(--primaryColor);
+    border-radius: 0.3em;
+    border: 1px solid #525252;
+}
+
+
+
+.section {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.8em 2em 0.8em;
+    background: linear-gradient(var(--backgroundColor) 40%, var(--secondaryColor) 100%);
+    height: 100%;
+    margin: 0.5em 0 0 0;
+    border-radius: 0.2em;
+
+    &__presentation {
+        margin: 0.5em 0 1em 0;
+        font-size: 0.83em;
+    }
+
+    &__p {
+        margin: 0.5em 0 1em 0;
+        font-size: 0.83em;
+    }
+
+    &__start {
+        text-align: center;
+        color: var(--fontAltColor);
+        margin: 0 0 0.5em 0;
+    }
+
+    &__ul {
+        padding: 0 1em 1em 2em;
+        font-size: 0.83em;
+        list-style: circle;
+    }
+
+    &__button {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.4em 1.5em;
+        background-color: var(--terciaryColor);
+        color: var(--fontColor);
+        max-width: 20em;
+        align-self: center;
+        border: 1px solid transparent;
+        border-radius: 5em;
+        margin: 1em 0 0 0;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .button:hover {
+        border: 1px solid var(--buttonColor);
+    }
+
+    &__containerLogin {
+        background-color: var(--primaryColor);
+        padding: 1em;
+        margin: 0 2em;
+        border-radius: 0.2em;
+        border: 1px solid #e7e6e635;
+    }
+
+    &__imageback {
+        position: absolute;
+        top: 5em;
+        z-index: 0;
+        opacity: 0.03;
+    }
+}

@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { EditIcon, SaveIcon, SettingsIcon, SignOutIcon, UserIcon } from '../constants/svg'
 import Link from 'next/link'
+import SnackBar from '../components/SnackBar/SnackBar'
+import { ConfigSnack, TypeAlert } from '../types/types'
 
 export default function AccountForm({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
@@ -16,6 +18,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
     const [username, setUsername] = useState<string | null>(null)
     const [website, setWebsite] = useState<string | null>(null)
     const [avatar_url, setAvatarUrl] = useState<string | null>(null)
+    const [open, setOpen] = useState(false)
+    const [configSnack, setConfigSnack] = useState<ConfigSnack>({ message: '', type: TypeAlert.Info, open: false })
     const router = useRouter()
     const user = session?.user
 
@@ -64,23 +68,32 @@ export default function AccountForm({ session }: { session: Session | null }) {
         website: string | null
         avatar_url: string | null
     }) {
-        try {
-            setLoading(true)
+        if (editProfile) {
+            try {
+                setLoading(true)
+                setEditProfile(false)
+                let { error } = await supabase.from('profiles').upsert({
+                    id: user?.id as string,
+                    full_name: fullname,
+                    username,
+                    website,
+                    avatar_url,
+                    updated_at: new Date().toISOString(),
+                })
+                if (error) throw error
+                setOpen(true)
+                setConfigSnack({ message: 'Perfil actualizado', type: TypeAlert.Success, open: true })
+                //alert('Perfil actualizado')
+            } catch (error) {
+                setOpen(true)
+                setConfigSnack({ message: 'Error descargando los datos!', type: TypeAlert.Error, open: true })
+                //alert('Error descargando los datos!')
+            } finally {
+                setLoading(false)
+            }
+        } else {
+            setEditProfile(true)
 
-            let { error } = await supabase.from('profiles').upsert({
-                id: user?.id as string,
-                full_name: fullname,
-                username,
-                website,
-                avatar_url,
-                updated_at: new Date().toISOString(),
-            })
-            if (error) throw error
-            alert('Perfil actualizado')
-        } catch (error) {
-            alert('Error descargando los datos!')
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -132,7 +145,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     />}
                 </div>
                 <form action="/auth/signout" method="post">
-                    <div className={`${styles.containerButton} ${editProfile && styles.containerButtonPressed}`} onClick={() => setEditProfile(prev => !prev)}>
+                    <div className={`${styles.containerButton} ${editProfile && styles.containerButtonPressed}`} onClick={() => updateProfile({ fullname, username, website, avatar_url })}>
                         {!editProfile && <UserIcon className={styles.buttonIcon} />}
                         {editProfile && <SaveIcon className={styles.buttonIcon} />}
                         <span className={styles.buttonTitle}>{!editProfile ? 'Editar mi perfil' : 'Guardar'}</span>
@@ -148,26 +161,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
                         <SignOutIcon className={styles.buttonIcon} />
                         <span className={styles.buttonTitle}>Cerrar sesión</span>
                         <span className={styles.buttonSubtitle}>Salir de tu cuenta</span>
-
                     </div>
-
-
                 </form>
-
-
-                <div className={styles.form__buttons}>
-                    <button
-                        className={styles.form__buttonTwo}
-                        onClick={() => updateProfile({ fullname, username, website, avatar_url })}
-                        disabled={loading}
-                    >
-                        {loading ? 'Cargando ...' : 'Actualizar'}
-                    </button>
-
-
-
-                </div>
             </div>
+            {<SnackBar message={configSnack?.message} type={configSnack.type} open={open} setOpen={setOpen} />}
         </div>
     )
 }
