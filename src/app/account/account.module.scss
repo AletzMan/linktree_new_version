@@ -8,6 +8,7 @@
 }
 
 .form {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,6 +16,29 @@
     padding: 1em;
     background-color: var(--primaryColor);
     border-radius: 0.2em;
+
+    &__ViewButton {
+        position: absolute;
+        right: 0.5em;
+        top: 0.4em;
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        border-radius: 1.5em;
+        border: none;
+        cursor: pointer;
+
+        &:hover>.form__ViewIcon {
+            color: var(--buttonColor);
+        }
+
+    }
+
+    &__ViewIcon {
+        color: #a1a1a170;
+        pointer-events: visibleFill;
+        transition: all 0.25s ease-in-out;
+    }
 
     &__title {
         margin: 0 0 2em 0;

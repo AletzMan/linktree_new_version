@@ -2,9 +2,9 @@
 import { Database } from '@/app/types/supabase'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
+import { FormEvent, useCallback, useEffect, useState } from 'react'
 import styles from './links.module.css'
-import { UserInfo, Network, TypeAlert, ConfigSnack } from '@/app/types/types'
+import { UserInfo, Network, TypeAlert, ConfigSnack, FormValue } from '@/app/types/types'
 import { AddIcon, ArrowBackIcon, CloseIcon, ColorIcon, DeleteIcon, EditIcon, LoadingIcon, Logo, SaveIcon, SettingsIcon, UpdateIcon } from '../constants/svg'
 import Link from 'next/link'
 import LinkNetworkEdit from '../components/ComboBox/LinkNetworkEdit'
@@ -15,16 +15,23 @@ const emptyNetwork: Network = [{
     url: ""
 }]
 
+const emptySettings: FormValue = {
+    backgroundColor: null,
+    fontColor: null,
+    fontHighColor: null
+}
+
 //const newUser: UserInfo = {fullName: '', username: '', avatar_url: '', website: ''}
 export default function EditLinks({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState<boolean>(true)
     const [viewModal, setViewModal] = useState({ view: false, mode: 0, index: 0 })
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState<boolean>(false)
+    const [viewColorPicker, setViewColorPicker] = useState<boolean>(false)
     const [configSnack, setConfigSnack] = useState<ConfigSnack>({ message: '', type: TypeAlert.Info, open: false })
     const [supabaseWrite, setSupabaseWrite] = useState<boolean>(false)
     const [datalink, setDataLink] = useState<Network[0]>({ application: 0, url: '' })
-    const [userData, setUserData] = useState<UserInfo>({ fullName: '', username: '', avatar_url: '', website: '', links: emptyNetwork })
+    const [userData, setUserData] = useState<UserInfo>({ fullName: '', username: '', avatar_url: '', website: '', links: emptyNetwork, settings: emptySettings })
     const user = session?.user
 
     const getProfile = useCallback(async () => {
@@ -33,16 +40,17 @@ export default function EditLinks({ session }: { session: Session | null }) {
 
             let { data, error, status } = await supabase
                 .from('profiles')
-                .select(`full_name, username, website, avatar_url, links:  links`)
+                .select(`full_name, username, website, avatar_url, links:  links, settings: settings`)
                 .eq('id', user?.id)
                 .single()
 
             if (error && status !== 406) {
                 throw error
             }
+
             if (data) {
                 const imgURL = session?.user?.user_metadata !== null ? session?.user.user_metadata.avatar_url : data?.avatar_url
-                setUserData({ fullName: data?.full_name, username: data?.username, avatar_url: imgURL, website: data?.website, links: data?.links })
+                setUserData({ fullName: data?.full_name, username: data?.username, avatar_url: imgURL, website: data?.website, links: data?.links, settings: data?.settings })
             }
         } catch (error) {
             alert('Error descargando los datos!')
@@ -76,7 +84,8 @@ export default function EditLinks({ session }: { session: Session | null }) {
             username: userData.username,
             avatar_url: userData.avatar_url,
             website: userData.website,
-            links: prevLinks
+            links: prevLinks,
+            settings: userData.settings
         }
         setUserData(newUserInfo)
     }
@@ -93,7 +102,8 @@ export default function EditLinks({ session }: { session: Session | null }) {
             username: userData.username,
             avatar_url: userData.avatar_url,
             website: userData.website,
-            links: prevLinks
+            links: prevLinks,
+            settings: userData.settings
         }
         setUserData(newUserInfo)
     }
@@ -135,7 +145,8 @@ export default function EditLinks({ session }: { session: Session | null }) {
             username: userData.username,
             avatar_url: userData.avatar_url,
             website: userData.website,
-            links: deleteLink as Network
+            links: deleteLink as Network,
+            settings: userData.settings
         }
         setUserData(newUserInfo)
     }
@@ -165,6 +176,43 @@ export default function EditLinks({ session }: { session: Session | null }) {
         }
     }
 
+    const HandleSaveColors = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const colorsData = new FormData(event.currentTarget)
+        const colors: FormValue = {
+            backgroundColor: colorsData.get('backgroundColor'),
+            fontColor: colorsData.get('fontColor'),
+            fontHighColor: colorsData.get('fontHighColor'),
+        }
+        console.log(colors)
+        UpdateSettings(colors)
+    }
+
+    const UpdateSettings = async (dataSettings: FormValue) => {
+        const { error, data } = await supabase
+            .from('profiles')
+            .update(
+                {
+                    settings: dataSettings
+                })
+            .eq('id', user?.id)
+            .select()
+
+        console.log(error, data)
+
+        if (error) {
+            setConfigSnack({ message: error.message, type: TypeAlert.Error, open: true })
+        } else {
+            if (data.length > 0) {
+                setConfigSnack({ message: 'Configuración actualizada', type: TypeAlert.Success, open: true })
+                setOpen(true)
+                setUserData({ fullName: data[0]?.full_name, username: data[0]?.username, avatar_url: data[0].avatar_url, website: data[0]?.website, links: data[0]?.links, settings: data[0]?.settings })
+
+            }
+        }
+        return error
+    }
+
 
     return (
         <section className={styles.card}>
@@ -187,24 +235,25 @@ export default function EditLinks({ session }: { session: Session | null }) {
                     <button className={styles.link__add} onClick={() => HandleAddLink(true)}>
                         <AddIcon className='' />
                     </button>
-                    <button className={styles.link__color}>
+                    <button className={`${styles.link__color} ${viewColorPicker && styles.link__colorActive}`} onClick={() => setViewColorPicker(prev => !prev)}>
                         <ColorIcon className={styles.link__colorIcon} />
                     </button>
-                    <div className={styles.link__settings}>
-                        <div className={styles.link__settingsOptions}>
-                            <input className={styles.link__settingsColor} type='color' />
-                            <span className={styles.link__settingsText}>Color Fondo</span>
-                        </div>
-                        <div className={styles.link__settingsOptions}>
-                            <input className={styles.link__settingsColor} type='color' />
-                            <span className={styles.link__settingsText}>Color Fuente</span>
-                        </div>
-                        <div className={styles.link__settingsOptions}>
-                            <input className={styles.link__settingsColor} type='color' />
-                            <span className={styles.link__settingsText}>Color Fuente</span>
-                        </div>
-                        <button className={styles.link__settingsSave} >Guardar</button>
-                    </div>
+                    {viewColorPicker &&
+                        <form className={styles.link__settings} onSubmit={HandleSaveColors}>
+                            <div className={styles.link__settingsOptions}>
+                                <input className={styles.link__settingsColor} defaultValue={userData?.settings.backgroundColor?.toString()} name='backgroundColor' type='color' />
+                                <span className={styles.link__settingsText}>Color Fondo</span>
+                            </div>
+                            <div className={styles.link__settingsOptions}>
+                                <input className={styles.link__settingsColor} defaultValue={userData?.settings.fontColor?.toString()} name='fontColor' type='color' />
+                                <span className={styles.link__settingsText}>Color Fuente</span>
+                            </div>
+                            <div className={styles.link__settingsOptions}>
+                                <input className={styles.link__settingsColor} defaultValue={userData?.settings.fontHighColor?.toString()} name='fontHighColor' type='color' />
+                                <span className={styles.link__settingsText}>Color de Realce</span>
+                            </div>
+                            <button className={styles.link__settingsSave} type='submit'>Guardar</button>
+                        </form>}
                 </div>
                 <div className={`${styles.card__link} ${styles.link}`}>
 

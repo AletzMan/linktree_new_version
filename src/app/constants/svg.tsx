@@ -359,6 +359,24 @@ export function AddIcon({ className }: { className: string }) {
     )
 }
 
+export function ViewIcon({ className }: { className: string }) {
+    return (
+        <svg className={className} width="32" height="24" viewBox="0 0 32 32">
+            <circle cx="16" cy="16" r="4" fill="currentColor" />
+            <path fill="currentColor" d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 22.5a6.5 6.5 0 1 1 6.5-6.5a6.51 6.51 0 0 1-6.5 6.5Z" />
+        </svg>
+    )
+}
+
+export function LinkIcon({ className }: { className: string }) {
+    return (
+        <svg className={className} width="50" height="50" viewBox="0 0 50 50">
+            <path fill="currentColor" d="m38.288 10.297l1.414 1.415l-14.99 14.99l-1.414-1.414z" />
+            <path fill="currentColor" d="M40 20h-2v-8h-8v-2h10zm-5 18H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z" />
+        </svg>
+    )
+}
+
 export function ColorIcon({ className }: { className: string }) {
     return (
         <svg className={className} width="28" height="28" viewBox="0 0 24 24">
