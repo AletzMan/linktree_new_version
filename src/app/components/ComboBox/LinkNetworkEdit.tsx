@@ -17,12 +17,18 @@ export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, 
 
     const handleChange = (event: SelectChangeEvent) => {
         //setApplication(parseInt(event.target.value))
-        setDataLink({ application: parseInt(event.target.value), url: typeLink.url })
+        setDataLink({ application: parseInt(event.target.value), url: typeLink.url, username: typeLink.username })
     };
 
     const HandleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
         //setUrl(event.target.value)
-        setDataLink({ application: typeLink.application, url: event.target.value })
+        setDataLink({ application: typeLink.application, url: event.target.value, username: typeLink.username })
+
+    }
+
+    const HandleChangeInputUsername = (event: ChangeEvent<HTMLInputElement>) => {
+        //setUrl(event.target.value)
+        setDataLink({ application: typeLink.application, url: typeLink.url, username: event.target.value })
 
     }
 
@@ -32,13 +38,13 @@ export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, 
     return (
         <>
             <FormControl variant="standard" sx={{
-                m: 0, minWidth: 120
+                m: 0, minWidth: 120, flexBasis: '50'
             }}>
                 <InputLabel id="demo-simple-select-standard-label" sx={{
                     color: 'white',
                     "&.Mui-focused": {
                         color: "var(--buttonColor)",
-                    }
+                    },
 
                 }}>Aplicación</InputLabel>
                 <Select
@@ -117,11 +123,30 @@ export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, 
                     ))}
                 </Select>
             </FormControl>
-            <FormControl>
+            <FormControl sx={{ flexBasis: '50' }}>
                 <Input
                     value={typeLink.url}
                     onChange={HandleChangeInput}
                     placeholder={SocialNetworks.find(network => network.value === typeLink.application)?.urlHolder}
+                    disabled={disabled}
+                    sx={{
+                        backgroundColor: '#DFDFDF12',
+                        color: 'var(--fontColor)',
+                        padding: "0em 1em",
+                        fontSize: '0.9em',
+                        "&:after": {
+                            borderBottomColor: "var(--buttonColor)",
+                        },
+                        "& .Mui-disabled": {
+                            WebkitTextFillColor: "#BCBCBC",
+                        },
+                    }} />
+            </FormControl>
+            <FormControl>
+                <Input
+                    value={typeLink.username}
+                    onChange={HandleChangeInputUsername}
+                    placeholder={'username'}
                     disabled={disabled}
                     sx={{
                         backgroundColor: '#DFDFDF12',

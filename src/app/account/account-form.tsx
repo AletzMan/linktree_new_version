@@ -9,6 +9,7 @@ import { EditIcon, SaveIcon, SettingsIcon, SignOutIcon, UserIcon, ViewIcon } fro
 import Link from 'next/link'
 import SnackBar from '../components/SnackBar/SnackBar'
 import { ConfigSnack, FormValue, TypeAlert } from '../types/types'
+import { Loading } from '../components/Loading/Loading'
 
 const emptySettings: FormValue = {
     backgroundColor: null,
@@ -20,7 +21,7 @@ const emptySettings: FormValue = {
 
 export default function AccountForm({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [editProfile, setEditProfile] = useState(false)
     const [fullname, setFullname] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
@@ -109,7 +110,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
 
     return (
         <div className={`form-widget `}>
-            <div className={styles.form} style={{ backgroundColor: `${settings.backgroundColor}` }}>
+            {!loading && <div className={styles.form} style={{ backgroundColor: `${settings.backgroundColor}` }}>
                 <Link className={styles.form__ViewButton} href={`/profile/[username]`}
                     as={`/profile/${username}`} >
                     <ViewIcon className={styles.form__ViewIcon} />
@@ -177,8 +178,9 @@ export default function AccountForm({ session }: { session: Session | null }) {
                         <span className={styles.buttonSubtitle}>Salir de tu cuenta</span>
                     </div>
                 </form>
-            </div>
+            </div>}
             {<SnackBar message={configSnack?.message} type={configSnack.type} open={open} setOpen={setOpen} />}
+            {loading && <Loading />}
         </div>
     )
 }

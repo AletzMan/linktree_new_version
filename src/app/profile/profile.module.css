@@ -59,6 +59,7 @@
   width: 100%;
   text-decoration: none;
   background-color: #22344d;
+  border: 1px solid transparent;
   color: aliceblue;
   border-radius: 0.3em;
   margin: 0.5em 0 0 0;
@@ -67,10 +68,26 @@
 }
 .link:hover {
   filter: brightness(120%);
+  transform: scale(1.03);
+}
+.link:hover > .link__icon {
+  opacity: 1;
 }
 .link__icon {
   position: absolute;
+  opacity: 0;
   right: 0.5em;
   width: 1.8em;
+  transition: all 0.25s ease-in-out;
   height: 1.8em;
+}
+.link__name {
+  font-weight: 600;
+}
+.link__username {
+  position: absolute;
+  right: 3em;
+  background-color: transparent;
+  padding: 0.2em 0.4em;
+  border-radius: 0.5em;
 }

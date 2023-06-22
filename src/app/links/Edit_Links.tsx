@@ -9,10 +9,12 @@ import { AddIcon, ArrowBackIcon, CloseIcon, ColorIcon, DeleteIcon, EditIcon, Loa
 import Link from 'next/link'
 import LinkNetworkEdit from '../components/ComboBox/LinkNetworkEdit'
 import SnackBar from '../components/SnackBar/SnackBar'
+import { Loading } from '../components/Loading/Loading'
 
 const emptyNetwork: Network = [{
     application: 0,
-    url: ""
+    url: "",
+    username: ''
 }]
 
 const emptySettings: FormValue = {
@@ -30,7 +32,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
     const [viewColorPicker, setViewColorPicker] = useState<boolean>(false)
     const [configSnack, setConfigSnack] = useState<ConfigSnack>({ message: '', type: TypeAlert.Info, open: false })
     const [supabaseWrite, setSupabaseWrite] = useState<boolean>(false)
-    const [datalink, setDataLink] = useState<Network[0]>({ application: 0, url: '' })
+    const [datalink, setDataLink] = useState<Network[0]>({ application: 0, url: '', username: '' })
     const [userData, setUserData] = useState<UserInfo>({ fullName: '', username: '', avatar_url: '', website: '', links: emptyNetwork, settings: emptySettings })
     const user = session?.user
 
@@ -64,7 +66,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
     }, [user, getProfile])
 
     const HandleAddLink = (view: boolean) => {
-        setDataLink({ application: 0, url: '' })
+        setDataLink({ application: 0, url: '', username: '' })
         setViewModal({ view: view, mode: 0, index: 0 })
         if (!view) {
             setOpen(false)
@@ -76,7 +78,8 @@ export default function EditLinks({ session }: { session: Session | null }) {
         const prevLinks: Network = [...userData?.links || emptyNetwork]
         const newLink: Network[0] = {
             application: datalink.application,
-            url: datalink.url
+            url: datalink.url,
+            username: datalink.username
         }
         prevLinks.push(newLink)
         const newUserInfo: UserInfo = {
@@ -97,6 +100,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
         const prevLinks: Network = [...userData.links]
         prevLinks[viewModal.index].application = datalink.application
         prevLinks[viewModal.index].url = datalink.url
+        prevLinks[viewModal.index].username = datalink.username
         const newUserInfo: UserInfo = {
             fullName: userData.fullName,
             username: userData.username,
@@ -286,7 +290,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
                     </section>}
             </>}
             {<SnackBar message={configSnack?.message} type={configSnack.type} open={open} setOpen={setOpen} />}
-            {loading && <><LoadingIcon className={styles.iconLoading} /> <span className={styles.textLoading}>Loading...</span></>}
+            {loading && <Loading />}
         </section >
     )
 
