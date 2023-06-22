@@ -1,0 +1,26 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3em;
+  height: 80vh;
+}
+
+.iconLoading {
+  animation: animationLoading 1s ease-in-out infinite;
+}
+
+.textLoading {
+  font-size: 2em;
+}
+
+@keyframes animationLoading {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(359deg);
+  }
+}

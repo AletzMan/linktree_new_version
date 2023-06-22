@@ -78,24 +78,8 @@
     }
 }
 
-.iconLoading {
-    animation: animationLoading 1s ease-in-out infinite;
-}
 
-.textLoading {
-    font-size: 2em;
 
-}
-
-@keyframes animationLoading {
-    0% {
-        transform: rotate(0);
-    }
-
-    100% {
-        transform: rotate(359deg);
-    }
-}
 
 .link {
     position: relative;
@@ -126,7 +110,7 @@
     &__network {
         position: relative;
         display: flex;
-        flex-direction: column;
+        flex-flow: column wrap;
         background-color: var(--backgroundColor);
         border: 1px solid transparent;
         padding: 1em 0.5em 0.5em 0.5em;

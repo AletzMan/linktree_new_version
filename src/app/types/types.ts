@@ -9,7 +9,8 @@ export type UserInfo = {
 
 export type Network = [{
     application: number,
-    url: string
+    url: string,
+    username: string
 }]
 
 
