@@ -4,6 +4,7 @@ export type UserInfo = {
     avatar_url: string,
     website: string,
     links: Network
+    settings: FormValue
 }
 
 export type Network = [{
@@ -30,11 +31,17 @@ export type LinkNetworkEditProps = {
     typeLink: Network[0],
     disabled: boolean,
     setDataLink: React.Dispatch<React.SetStateAction<Network[0]>>,
-  };
+};
 
-  export type SnackBarStatus = {
+export type SnackBarStatus = {
     message: string,
     type: TypeAlert,
     open: boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  }
+}
+
+export type FormValue = {
+    backgroundColor: FormDataEntryValue | null,
+    fontColor: FormDataEntryValue | null,
+    fontHighColor: FormDataEntryValue | null,
+}

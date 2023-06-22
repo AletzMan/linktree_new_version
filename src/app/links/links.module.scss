@@ -197,7 +197,7 @@
         column-gap: 0.5em;
         width: 100%;
         padding: 0.5em 1em 0.5em 1em;
-        z-index: 10;
+        z-index: 2;
 
     }
 
@@ -215,6 +215,12 @@
         padding: 0.2em;
         cursor: pointer;
         transition: all 0.25s ease-in-out;
+
+        &Active {
+            background-color: var(--secondaryColor);
+            color: var(--fontAltColor);
+            border: 1px solid var(--buttonColor);
+        }
 
         &:hover {
             background-color: var(--secondaryColor);
@@ -258,22 +264,31 @@
 
     &__settings {
         position: absolute;
-        right: 1em;
-        top: 2.55em;
+        right: 1.1em;
+        top: 3em;
         display: flex;
         flex-direction: column;
         row-gap: 0.5em;
-        padding: 0.5em;
+        padding: 0.5em 1em 0.5em 0.5em;
         border-radius: 0.2em;
         background-color: var(--backgroundColor);
         border: 1px solid var(--buttonColor);
-        font-size: 0.85em;
+        animation: animationSettings 0.3s ease both;
+        transform-origin: right top;
+        font-size: 0.8em;
+
+
 
         &Options {
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 0.5em;
+            padding: 0 0.5em 0 0;
+
+            &:hover {
+                background-color: #8ba88e45;
+            }
 
         }
 
@@ -286,12 +301,38 @@
             cursor: pointer;
 
         }
+
+        &Save {
+            padding: 0.4em 1em;
+            border: none;
+            border-radius: 0.2em;
+            background-color: var(--secondaryColor);
+            color: var(--fontColor);
+            transition: all 0.25s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--buttonColor);
+            }
+        }
     }
 
 }
 
 
 @keyframes animationButtons {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes animationSettings {
     0% {
         opacity: 0;
         transform: scale(0);
@@ -315,6 +356,9 @@
     height: 100%;
     background-color: #3b3b3b75;
     backdrop-filter: blur(5px);
+    animation: animationModal 0.2s ease both;
+    z-index: 3;
+
 
     &__title {
         padding: 0.4em 1.1em;
@@ -322,7 +366,7 @@
         background-color: #f8f8f810;
         border-radius: 2em;
         border: 1px solid #7ae78935;
-        color: var(--buttonColor);
+        color: var(--fontAltColor);
     }
 
     &__link {
@@ -353,5 +397,17 @@
         &:hover {
             background-color: var(--buttonColor);
         }
+    }
+}
+
+@keyframes animationModal {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
     }
 }
