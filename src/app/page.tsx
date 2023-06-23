@@ -12,7 +12,7 @@ const PointsStar = ['Inicio de sesión', 'Agrega tus enlaces', 'Personaliza el d
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Logo />
+      <Logo className={styles.logo} />
       <section className={styles.section}>
         <p className={styles.section__presentation}>
           ¡Bienvenido/a a nuestra plataforma de enlaces personalizados!
