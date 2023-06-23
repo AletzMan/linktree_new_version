@@ -14,11 +14,6 @@ const emptyLinks: Network = [
     }
 ]
 
-const emptySettings: FormValue = {
-    backgroundColor: null,
-    fontColor: null,
-    fontHighColor: null
-}
 
 import { UserInfo } from "@/app/types/types"
 import { LinkProfile } from "./LinkProfile"
@@ -26,11 +21,12 @@ import { Loading } from "@/app/components/Loading/Loading"
 import { NoFoundProfile } from "./NoFoundProfile"
 import { Logo } from "@/app/constants/svg"
 import Avatar from "@/app/account/avatar"
+import { defaultSettings } from "@/app/constants/constants"
 
 export function CardProfile({ username }: { username: string }) {
     const supabase = createClientComponentClient<Database>()
     const [loading, setLoading] = useState(true)
-    const [userData, setUserData] = useState<UserInfo>({ id: '', fullName: '', username: '', avatar_url: '', website: '', links: emptyLinks, settings: emptySettings })
+    const [userData, setUserData] = useState<UserInfo>({ id: '', fullName: '', username: '', avatar_url: '', website: '', links: emptyLinks, settings: defaultSettings })
 
     useEffect(() => {
         const getProfile = async () => {
@@ -60,9 +56,9 @@ export function CardProfile({ username }: { username: string }) {
 
     console.log(userData)
     return (
-        <section className={styles.section}>
+        <section className={styles.section} style={{ backgroundColor: `${userData?.settings.backgroundColorSecondary}`, borderRadius: `${parseInt(userData?.settings.radiusLink?.toString() as string) / 60}em` }}>
             {!loading && userData.fullName !== '' &&
-                <div className={styles.card} style={{ backgroundColor: `${userData?.settings.backgroundColor}` }}>
+                <div className={styles.card} style={{ backgroundColor: `${userData?.settings.backgroundColor}`, borderRadius: `${parseInt(userData?.settings.radiusLink?.toString() as string) / 60}em` }}>
                     <h1 className={styles.card__title} style={{ color: `${userData?.settings.fontColor}` }}>PERFIL</h1>
                     <Avatar uid={userData?.id} url={userData?.avatar_url} size={120}
                         onUpload={() => null}

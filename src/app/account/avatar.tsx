@@ -27,14 +27,11 @@ export default function Avatar({
     const [avatarUrl, setAvatarUrl] = useState<Profiles['avatar_url'] | null>(null)
     const [uploading, setUploading] = useState(false)
     const [loadImage, setLoadiImage] = useState(false)
-    console.log(url)
 
     useEffect(() => {
         async function downloadImage(path: string) {
             try {
                 const { data, error } = await supabase.storage.from('avatars').download(path)
-                console.log(data)
-
                 if (error) {
                     throw new Error(error.message);
                 }
@@ -84,7 +81,7 @@ export default function Avatar({
         <div style={{ position: 'relative' }}>
             <div style={{ padding: `${size * 0.005}em`, border: `3px solid ${settings.fontHighColor}`, borderRadius: '7em' }}>
                 <div style={{ borderRadius: '7em', overflow: 'hidden', width: '100%', height: '100%', display: 'flex', alignItems: 'flex-start' }}>
-                    {avatarUrl ? (
+                    {avatarUrl && loadImage ? (
                         <Image
                             width={size}
                             height={size}

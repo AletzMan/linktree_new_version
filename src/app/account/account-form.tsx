@@ -13,11 +13,6 @@ import { Loading } from '../components/Loading/Loading'
 import { defaultSettings } from '../constants/constants'
 import Avatar from './avatar'
 
-const emptySettings: FormValue = {
-    backgroundColor: null,
-    fontColor: null,
-    fontHighColor: null
-}
 
 
 
@@ -31,7 +26,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     const [username, setUsername] = useState<string | null>(null)
     const [website, setWebsite] = useState<string | null>(null)
     const [avatar_url, setAvatarUrl] = useState<string>('')
-    const [settings, setSettings] = useState<FormValue>(emptySettings)
+    const [settings, setSettings] = useState<FormValue>(defaultSettings)
     const [open, setOpen] = useState(false)
     const [configSnack, setConfigSnack] = useState<ConfigSnack>({ message: '', type: TypeAlert.Info, open: false })
     const router = useRouter()
@@ -114,7 +109,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     }
 
     return (
-        <div className={`form-widget `}>
+        <div className={`form-widget `} style={{ backgroundColor: `${settings.backgroundColorSecondary}`, padding: '1em' }}>
             {!loading && <div className={styles.form} style={{ backgroundColor: `${settings.backgroundColor}` }}>
                 <Link className={styles.form__ViewButton} href={`/profile/[username]`}
                     as={`/profile/${username}`} title='Ver vista de perfil'>

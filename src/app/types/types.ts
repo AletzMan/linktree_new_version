@@ -44,6 +44,9 @@ export type SnackBarStatus = {
 
 export type FormValue = {
     backgroundColor: FormDataEntryValue | null,
+    backgroundColorSecondary: FormDataEntryValue | null,
     fontColor: FormDataEntryValue | null,
     fontHighColor: FormDataEntryValue | null,
+    radiusLink: FormDataEntryValue | null,
+    bubbleEffect: FormDataEntryValue | null,
 }
