@@ -235,9 +235,7 @@
   height: 1.5em;
 }
 .link__settings {
-  position: absolute;
-  right: 1.1em;
-  top: 3em;
+  position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 0.5em;
@@ -248,6 +246,35 @@
   animation: animationSettings 0.3s ease both;
   transform-origin: right top;
   font-size: 0.8em;
+}
+.link__settingsPreview {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  color: var(--terciaryColor);
+  font-size: 0.7em;
+  right: 0.8em;
+  top: 2.8em;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  animation: animationSettings 0.3s ease both;
+  transition: all 0.15s ease-in-out;
+}
+.link__settingsPreview:hover {
+  color: var(--fontAltColor);
+}
+.link__settingsPreview:hover > .link__settingsPreviewIcon {
+  color: var(--fontAltColor);
+}
+.link__settingsPreviewIcon {
+  color: var(--terciaryColor);
+}
+.link__settingsTitle {
+  border-bottom: 1px solid var(--buttonColor);
+  padding: 0 0 0.3em 0;
+  color: var(--fontAltColor);
 }
 .link__settingsOptions {
   display: flex;
@@ -267,6 +294,10 @@
   border-radius: 0em;
   cursor: pointer;
 }
+.link__settingsRadius {
+  width: 1.5em;
+  height: 1.5em;
+}
 .link__settingsSave {
   padding: 0.4em 1em;
   border: none;
@@ -278,6 +309,17 @@
 }
 .link__settingsSave:hover {
   background-color: var(--buttonColor);
+}
+
+.menuSettings {
+  position: absolute;
+  right: 1.1em;
+  top: 3em;
+}
+
+.preview {
+  animation: animationSettings 0.3s ease both;
+  transform-origin: top center;
 }
 
 @keyframes animationButtons {
@@ -293,13 +335,37 @@
 @keyframes animationSettings {
   0% {
     opacity: 0;
-    transform: scale(0);
+    transform: scaleY(0);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scaleY(1);
   }
 }
+.roundedOptions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em;
+}
+.roundedOptions:hover {
+  background-color: #8ba88e45;
+}
+.roundedOptions__title {
+  grid-column: 1/span 4;
+  color: var(--buttonColor);
+  font-weight: 500;
+  font-size: 1em;
+}
+.roundedOptions__radiusOne, .roundedOptions__radiusTwo, .roundedOptions__radiusThree, .roundedOptions__radiusFour {
+  height: 2em;
+  grid-column: 1/span 3;
+}
+.roundedOptions__labelOne {
+  grid-column: 4/5;
+}
+
 .modaladd {
   display: flex;
   align-items: center;

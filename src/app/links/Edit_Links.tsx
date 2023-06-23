@@ -1,17 +1,17 @@
 'use client'
 import { Database } from '@/app/types/supabase'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import Image from 'next/image'
-import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, MouseEvent, useCallback, useEffect, useState } from 'react'
 import styles from './links.module.css'
 import { UserInfo, Network, TypeAlert, ConfigSnack, FormValue } from '@/app/types/types'
-import { AddIcon, ArrowBackIcon, ArrowIcon, CloseIcon, ColorIcon, DeleteIcon, EditIcon, LoadingIcon, Logo, SaveIcon, SettingsIcon, UpdateIcon } from '../constants/svg'
+import { AddIcon, ArrowBackIcon, ArrowIcon, ColorIcon, DeleteIcon, EditIcon, Logo, ViewIcon, ViewOffIcon } from '../constants/svg'
 import Link from 'next/link'
 import LinkNetworkEdit from '../components/ComboBox/LinkNetworkEdit'
 import SnackBar from '../components/SnackBar/SnackBar'
 import { Loading } from '../components/Loading/Loading'
 import { defaultSettings } from '../constants/constants'
 import Avatar from '../account/avatar'
+import { PreviewLink } from './PreviewLink'
 
 const emptyNetwork: Network = [{
     application: 0,
@@ -19,11 +19,13 @@ const emptyNetwork: Network = [{
     username: ''
 }]
 
-const emptySettings: FormValue = {
-    backgroundColor: null,
-    fontColor: null,
-    fontHighColor: null
+const youtubeNetwork: Network[0] = {
+    application: 23,
+    url: 'https://youtube.com/profile',
+    username: 'username'
 }
+
+
 
 //const newUser: UserInfo = {fullName: '', username: '', avatar_url: '', website: ''}
 export default function EditLinks({ session }: { session: Session | null }) {
@@ -32,10 +34,13 @@ export default function EditLinks({ session }: { session: Session | null }) {
     const [viewModal, setViewModal] = useState({ view: false, mode: 0, index: 0 })
     const [open, setOpen] = useState<boolean>(false)
     const [viewColorPicker, setViewColorPicker] = useState<boolean>(false)
+    const [previewSettings, setPreviewSettings] = useState<FormValue>(defaultSettings)
     const [configSnack, setConfigSnack] = useState<ConfigSnack>({ message: '', type: TypeAlert.Info, open: false })
+    const [viewPreview, setViewPreview] = useState<boolean>(false)
     const [supabaseWrite, setSupabaseWrite] = useState<boolean>(false)
     const [datalink, setDataLink] = useState<Network[0]>({ application: 0, url: '', username: '' })
-    const [userData, setUserData] = useState<UserInfo>({ id: '', fullName: '', username: '', avatar_url: '', website: '', links: emptyNetwork, settings: emptySettings })
+    const [userData, setUserData] = useState<UserInfo>({ id: '', fullName: '', username: '', avatar_url: '', website: '', links: emptyNetwork, settings: defaultSettings })
+    const [valuesPreview, setValuesPreview] = useState(['', '', '', '', '', false])
     const user = session?.user
 
     const getProfile = useCallback(async () => {
@@ -121,6 +126,16 @@ export default function EditLinks({ session }: { session: Session | null }) {
         }
     }, [userData.links])
 
+    useEffect(() => {
+        setValuesPreview([
+            userData?.settings.backgroundColor as string,
+            userData?.settings.backgroundColorSecondary as string,
+            userData?.settings.fontColor as string,
+            userData?.settings.fontHighColor as string,
+            userData?.settings.radiusLink as string,
+            userData?.settings.bubbleEffect === null ? false : true])
+    }, [userData.settings])
+
     const UpdateLinks = async () => {
         const { error, data } = await supabase
             .from('profiles')
@@ -189,8 +204,11 @@ export default function EditLinks({ session }: { session: Session | null }) {
         const colorsData = new FormData(event.currentTarget)
         const colors: FormValue = {
             backgroundColor: colorsData.get('backgroundColor'),
+            backgroundColorSecondary: colorsData.get('backgroundColorSecondary'),
             fontColor: colorsData.get('fontColor'),
             fontHighColor: colorsData.get('fontHighColor'),
+            radiusLink: colorsData.get('radius'),
+            bubbleEffect: colorsData.get('bubbleEffect')
         }
         console.log(colors)
         UpdateSettings(colors)
@@ -221,9 +239,44 @@ export default function EditLinks({ session }: { session: Session | null }) {
         return error
     }
 
+    const HandlePrevieSettins = (event: MouseEvent<HTMLInputElement> | ChangeEvent<HTMLInputElement>) => {
+        const prevValues = [...valuesPreview]
+        if (event.currentTarget.type === 'color') {
+            if (event.currentTarget.name === 'backgroundColor') {
+                prevValues[0] = event.currentTarget.value
+            } else if (event.currentTarget.name === 'backgroundColorSecondary') {
+                prevValues[1] = event.currentTarget.value
+            } if (event.currentTarget.name === 'fontColor') {
+                prevValues[2] = event.currentTarget.value
+            } if (event.currentTarget.name === 'fontHighColor') {
+                prevValues[3] = event.currentTarget.value
+            }
+        } else if (event.currentTarget.type === 'range') {
+            prevValues[4] = event.currentTarget.value
+        } else if (event.currentTarget.type === 'checkbox') {
+            prevValues[5] = !event.currentTarget.checked
+        }
+
+        setValuesPreview(prevValues)
+    }
+
+    useEffect(() => {
+        const newSettings: FormValue = {
+            backgroundColor: valuesPreview[0] as string,
+            backgroundColorSecondary: valuesPreview[1] as string,
+            fontColor: valuesPreview[2] as string,
+            fontHighColor: valuesPreview[3] as string,
+            radiusLink: valuesPreview[4] as string,
+            bubbleEffect: valuesPreview[5] === false ? null : 'on',
+        }
+        setPreviewSettings(newSettings)
+    }, [valuesPreview])
 
     return (
         <section className={styles.card}>
+            {viewPreview &&
+                <PreviewLink link={youtubeNetwork} settings={previewSettings} userData={userData} />
+            }
             {!loading && <>
                 <nav className={styles.card__nav}>
                     <Link className={styles.card__backbutton} href='/account'>
@@ -244,21 +297,45 @@ export default function EditLinks({ session }: { session: Session | null }) {
                         <ColorIcon className={styles.link__colorIcon} />
                     </button>
                     {viewColorPicker &&
-                        <form className={styles.link__settings} onSubmit={HandleSaveColors}>
-                            <div className={styles.link__settingsOptions}>
-                                <input className={styles.link__settingsColor} defaultValue={userData?.settings.backgroundColor?.toString()} name='backgroundColor' type='color' />
-                                <span className={styles.link__settingsText}>Color Fondo</span>
-                            </div>
-                            <div className={styles.link__settingsOptions}>
-                                <input className={styles.link__settingsColor} defaultValue={userData?.settings.fontColor?.toString()} name='fontColor' type='color' />
-                                <span className={styles.link__settingsText}>Color Fuente</span>
-                            </div>
-                            <div className={styles.link__settingsOptions}>
-                                <input className={styles.link__settingsColor} defaultValue={userData?.settings.fontHighColor?.toString()} name='fontHighColor' type='color' />
-                                <span className={styles.link__settingsText}>Color de Realce</span>
-                            </div>
-                            <button className={styles.link__settingsSave} type='submit'>Guardar</button>
-                        </form>}
+                        <div className={styles.menuSettings}>
+                            <button className={styles.link__settingsPreview} onClick={() => setViewPreview(prev => !prev)} title="Vista preliminar">
+                                <span>Vista preliminar</span>
+                                {viewPreview && <ViewIcon className={styles.link__settingsPreviewIcon} />}
+                                {!viewPreview && <ViewOffIcon className={styles.link__settingsPreviewIcon} />}
+                            </button>
+                            <form className={styles.link__settings} onSubmit={HandleSaveColors}>
+
+                                <h3 className={styles.link__settingsTitle}>Personalización de tarjeta</h3>
+                                <span className={styles.roundedOptions__title}>COLORES</span>
+                                <div className={styles.link__settingsOptions}>
+                                    <input className={styles.link__settingsColor} onChange={HandlePrevieSettins} defaultValue={userData?.settings.backgroundColor?.toString()} name='backgroundColor' type='color' />
+                                    <span className={styles.link__settingsText}>Color fondo</span>
+                                </div>
+                                <div className={styles.link__settingsOptions}>
+                                    <input className={styles.link__settingsColor} onChange={HandlePrevieSettins} defaultValue={userData?.settings.backgroundColorSecondary?.toString()} name='backgroundColorSecondary' type='color' />
+                                    <span className={styles.link__settingsText}>Color fondo secundario</span>
+                                </div>
+                                <div className={styles.link__settingsOptions}>
+                                    <input className={styles.link__settingsColor} onChange={HandlePrevieSettins} defaultValue={userData?.settings.fontColor?.toString()} name='fontColor' type='color' />
+                                    <span className={styles.link__settingsText}>Color fuente</span>
+                                </div>
+                                <div className={styles.link__settingsOptions}>
+                                    <input className={styles.link__settingsColor} onChange={HandlePrevieSettins} defaultValue={userData?.settings.fontHighColor?.toString()} name='fontHighColor' type='color' />
+                                    <span className={styles.link__settingsText}>Color de realce</span>
+                                </div>
+                                <div className={styles.roundedOptions}>
+                                    <h4 className={styles.roundedOptions__title}>REDONDEO DE ENLACE</h4>
+                                    <input className={styles.roundedOptions__radiusOne} onChange={HandlePrevieSettins} min={0} max={100} step={10} defaultValue={userData?.settings.radiusLink?.toString()} name='radius' type='range' />
+                                    <label className={styles.roundedOptions__labelOne}>{`${valuesPreview[4] as string}%`}</label>
+                                </div>
+                                <div className={styles.roundedOptions}>
+                                    <h4 className={styles.roundedOptions__title}>EFECTO BURBUJA EN ENLACE</h4>
+                                    <input className={styles.roundedOptions__radiusOne} onMouseUp={HandlePrevieSettins} defaultChecked={userData?.settings.bubbleEffect?.toString() === 'on'} name='bubbleEffect' type='checkbox' />
+                                    <label className={styles.roundedOptions__labelOne}>{ }</label>
+                                </div>
+                                <button className={styles.link__settingsSave} type='submit'>Guardar</button>
+                            </form>
+                        </div>}
                 </div>
                 {!userData.links &&
                     <div className={styles.emptyLink}>

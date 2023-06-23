@@ -245,6 +245,9 @@ export const SocialNetworks = [
 
 export const defaultSettings: FormValue = {
     backgroundColor: '#171717',
+    backgroundColorSecondary: '#252525',
     fontColor: '#DEDEDE',
-    fontHighColor: '#FF8800CD'
+    fontHighColor: '#FF8800CD',
+    radiusLink: '0.5',
+    bubbleEffect: '0.5',
 }

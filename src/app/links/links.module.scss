@@ -271,9 +271,7 @@
     }
 
     &__settings {
-        position: absolute;
-        right: 1.1em;
-        top: 3em;
+        position: relative;
         display: flex;
         flex-direction: column;
         row-gap: 0.5em;
@@ -285,6 +283,41 @@
         transform-origin: right top;
         font-size: 0.8em;
 
+        &Preview {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            color: var(--terciaryColor);
+            font-size: 0.7em;
+            right: 0.8em;
+            top: 2.8em;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+            animation: animationSettings 0.3s ease both;
+            transition: all 0.15s ease-in-out;
+
+            &:hover {
+                color: var(--fontAltColor);
+
+                &>.link__settingsPreviewIcon {
+                    color: var(--fontAltColor);
+
+                }
+            }
+
+            &Icon {
+                color: var(--terciaryColor);
+            }
+        }
+
+        &Title {
+            border-bottom: 1px solid var(--buttonColor);
+            padding: 0 0 0.3em 0;
+            color: var(--fontAltColor);
+
+        }
 
 
         &Options {
@@ -300,6 +333,8 @@
 
         }
 
+
+
         &Color {
             width: 2em;
             height: 2.2em;
@@ -308,6 +343,11 @@
             border-radius: 0em;
             cursor: pointer;
 
+        }
+
+        &Radius {
+            width: 1.5em;
+            height: 1.5em;
         }
 
         &Save {
@@ -327,6 +367,17 @@
 
 }
 
+.menuSettings {
+    position: absolute;
+    right: 1.1em;
+    top: 3em;
+}
+
+.preview {
+    animation: animationSettings 0.3s ease both;
+    transform-origin: top center;
+}
+
 
 @keyframes animationButtons {
     0% {
@@ -343,15 +394,46 @@
 @keyframes animationSettings {
     0% {
         opacity: 0;
-        transform: scale(0);
+        transform: scaleY(0);
     }
 
     100% {
         opacity: 1;
-        transform: scale(1);
+        transform: scaleY(1);
     }
 }
 
+.roundedOptions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em;
+
+    &:hover {
+        background-color: #8ba88e45;
+    }
+
+    &__title {
+        grid-column: 1 / span 4;
+        color: var(--buttonColor);
+        font-weight: 500;
+        font-size: 1em;
+    }
+
+    &__radiusOne,
+    &__radiusTwo,
+    &__radiusThree,
+    &__radiusFour {
+        height: 2em;
+        grid-column: 1 / span 3;
+    }
+
+    &__labelOne {
+        grid-column: 4 / 5;
+    }
+
+}
 
 
 .modaladd {
