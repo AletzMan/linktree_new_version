@@ -10,12 +10,16 @@ import Link from 'next/link'
 import SnackBar from '../components/SnackBar/SnackBar'
 import { ConfigSnack, FormValue, TypeAlert } from '../types/types'
 import { Loading } from '../components/Loading/Loading'
+import { defaultSettings } from '../constants/constants'
+import Avatar from './avatar'
 
 const emptySettings: FormValue = {
     backgroundColor: null,
     fontColor: null,
     fontHighColor: null
 }
+
+
 
 
 
@@ -26,7 +30,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     const [fullname, setFullname] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
     const [website, setWebsite] = useState<string | null>(null)
-    const [avatar_url, setAvatarUrl] = useState<string | null>(null)
+    const [avatar_url, setAvatarUrl] = useState<string>('')
     const [settings, setSettings] = useState<FormValue>(emptySettings)
     const [open, setOpen] = useState(false)
     const [configSnack, setConfigSnack] = useState<ConfigSnack>({ message: '', type: TypeAlert.Info, open: false })
@@ -53,9 +57,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 setUsername(data.username)
                 setWebsite(data.website)
                 setAvatarUrl(data.avatar_url)
-                setSettings(data.settings)
-                if (session?.user?.user_metadata !== null) {
-                    setAvatarUrl(session?.user.user_metadata.avatar_url)
+                if (data.settings) {
+                    setSettings(data.settings)
+                } else {
+                    setSettings(defaultSettings)
                 }
             }
         } catch (error) {
@@ -112,18 +117,22 @@ export default function AccountForm({ session }: { session: Session | null }) {
         <div className={`form-widget `}>
             {!loading && <div className={styles.form} style={{ backgroundColor: `${settings.backgroundColor}` }}>
                 <Link className={styles.form__ViewButton} href={`/profile/[username]`}
-                    as={`/profile/${username}`} >
+                    as={`/profile/${username}`} title='Ver vista de perfil'>
                     <ViewIcon className={styles.form__ViewIcon} />
                 </Link>
                 <h1 className={styles.form__title} style={{ color: `${settings.fontColor}` }}>Perfil</h1>
-                <div className={styles.form__containerPhoto} style={{ borderColor: `${settings.fontHighColor}` }}>
-                    {editProfile && <button className={styles.form__EditIcon}>
-                        <EditIcon className='' />
-                    </button>}
-                    <div className={styles.form__picture}>
-                        {avatar_url && <Image className={styles.fomr_photo} src={`${avatar_url}`} width={120} height={120} alt={`avatar from ${fullname}`} />}
-                    </div>
-                </div>
+                {<Avatar
+                    uid={user?.id || ''}
+                    url={avatar_url}
+                    size={120}
+                    onUpload={(url) => {
+                        setAvatarUrl(url)
+                        updateProfile({ fullname, username, website, avatar_url: url })
+                    }}
+                    settings={settings}
+                    isEdit={editProfile}
+                />}
+
                 <div className={styles.form__container}>
                     {!editProfile && <h2 className={styles.form__containerName} style={{ color: `${settings.fontColor}` }}>{fullname}</h2>}
                     {editProfile && <input
@@ -159,8 +168,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
                         onChange={(e) => setWebsite(e.target.value)}
                     />}
                 </div>
-                <form action="/auth/signout" method="post">
-                    <div className={`${styles.containerButton} ${editProfile && styles.containerButtonPressed}`} onClick={() => updateProfile({ fullname, username, website, avatar_url })}>
+                <form className={styles.formButtons} action="/auth/signout" method="post">
+                    <div className={`${styles.containerButton} ${!username && styles.containerButtonAlert} ${editProfile && styles.containerButtonPressed}`} onClick={() => updateProfile({ fullname, username, website, avatar_url })}>
                         {!editProfile && <UserIcon className={styles.buttonIcon} />}
                         {editProfile && <SaveIcon className={styles.buttonIcon} />}
                         <span className={styles.buttonTitle}>{!editProfile ? 'Editar mi perfil' : 'Guardar'}</span>

@@ -1,3 +1,5 @@
+import { FormValue, Network } from "./types";
+
 export type Json =
   | string
   | number
@@ -9,8 +11,22 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        id: string;
+        username: string;
+        full_name: string;
+        avatar_url: string;
+        website: string;
+        links: Network;
+        settings: FormValue;
+        // Otros campos de la tabla "profiles"
+        Rows: {
+        [_ in never]: never
+      }
+      };
+      
     }
+    
     Views: {
       [_ in never]: never
     }

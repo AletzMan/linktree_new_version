@@ -1,3 +1,4 @@
+import { FormValue } from "../types/types";
 import { DevianLogo, DiscordLogo, DribbleLogo, FacebookLogo, FlickrLogo, InstagramLogo, LinkedInLogo, NullIcon, PinterestLogo, QuoraLogo, RedditLogo, SkypeLogo, SnapchatLogo, SoundCloudLogo, SpotifyLogo, SteamLogo, TelegramLogo, TikTokLogo, TumblrLogo, TwitchLogo, TwitterLogo, VimeoLogo, WhatsAppLogo, YoutubeLogo } from "./svg";
 
 export const SocialNetworks = [
@@ -15,8 +16,8 @@ export const SocialNetworks = [
         logo: <DevianLogo className="" />,
         value: 1,
         urlHolder: 'https://deviantart.com/profile',
-        color1: '#E60023',
-        color2: '#FFFFFF',
+        color1: '#05cc47',
+        color2: '#1f3626',
         color3: '#d4f5de',
 
     },
@@ -241,3 +242,9 @@ export const SocialNetworks = [
 
     },
 ]
+
+export const defaultSettings: FormValue = {
+    backgroundColor: '#171717',
+    fontColor: '#DEDEDE',
+    fontHighColor: '#FF8800CD'
+}

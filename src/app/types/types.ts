@@ -1,4 +1,5 @@
 export type UserInfo = {
+    id: string,
     fullName: string,
     username: string,
     avatar_url: string,
