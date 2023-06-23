@@ -7,6 +7,24 @@
 
 }
 
+.editLabel {
+    border: 1px solid #979797;
+    background-color: #2b2b2b;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        border: 1px solid #f1f1f1;
+
+        &>.editIcon {
+            color: #f1f1f1;
+        }
+    }
+}
+
+.editIcon {
+    color: #979797;
+}
+
 .form {
     position: relative;
     display: flex;
@@ -41,7 +59,7 @@
     }
 
     &__title {
-        margin: 0 0 2em 0;
+        margin: 0 0 0 0;
         font-size: 1.3em;
         padding: 0.2em 1.2em;
         border-radius: 2em;
@@ -211,7 +229,9 @@
     }
 }
 
-
+.formButtons {
+    margin: 2em 0 0 0;
+}
 
 
 .containerButton {
@@ -246,6 +266,44 @@
     &Pressed {
         background-color: #a1a1a122;
         border-color: var(--buttonColor);
+    }
+
+    &Alert {
+        position: relative;
+        border: 2px solid transparent;
+        animation: animationAlert 1s ease-in-out infinite alternate;
+
+        &::before {
+            position: absolute;
+            content: 'Define tu nombre de usuario';
+            background-color: var(--primaryColor);
+            padding: 0.2em 0.4em;
+            top: -0.7em;
+            border-radius: 0.15em;
+            font-size: 0.8em;
+            border: 1px solid var(--buttonColor);
+            animation: animationAlertText 1s ease-in-out infinite alternate;
+        }
+    }
+}
+
+@keyframes animationAlert {
+    0% {
+        border-color: transparent;
+    }
+
+    100% {
+        border-color: var(--fontAltColor);
+    }
+}
+
+@keyframes animationAlertText {
+    0% {
+        transform: translateY(-0.7em);
+    }
+
+    100% {
+        transform: translateY(-1.5em);
     }
 }
 

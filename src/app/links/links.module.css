@@ -70,6 +70,29 @@
   font-size: 1em;
 }
 
+.emptyLink {
+  position: relative;
+  padding: 0.3em 0.6em;
+  border-radius: 2em;
+  background-color: #e2e2e225;
+}
+.emptyLink__icon {
+  width: 1.3em;
+  height: 1.3em;
+  position: absolute;
+  color: var(--fontAltColor);
+  transform: translateX(-1.35em) translateY(-0.85em) rotate(-45deg);
+  animation: animationArrow 1s ease-in-out infinite alternate;
+}
+
+@keyframes animationArrow {
+  0% {
+    transform: translateX(-1.35em) translateY(-0.85em) rotate(-45deg);
+  }
+  100% {
+    transform: translateX(-2.2em) translateY(-1.7em) rotate(-45deg);
+  }
+}
 .link {
   position: relative;
   display: flex;

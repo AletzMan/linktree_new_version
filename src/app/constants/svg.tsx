@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 
 export function GoogleIcon() {
@@ -19,12 +20,20 @@ export function LinkTreeLogo() {
     )
 }
 
-export function Logo() {
+export function Logo({ className }: { className: string }) {
     return (
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5em", background: "#EFEFEF10", padding: "0.4em 0.8em", borderRadius: "2em", border: "1px solid #c6de4145" }}>
+        <Link href={'/'} className={className} style={{ display: "flex", alignItems: "center", gap: "0.5em", background: "#EFEFEF10", padding: "0.4em 0.8em", borderRadius: "2em", border: "1px solid #c6de4145", maxWidth: '10em', justifyContent: 'center', textDecoration: 'none', color: 'var(--buttonColor)' }}>
             <LinkTreeLogo />
             <h1 style={{ fontSize: '1em', fontWeight: '500' }}>Link-Tree</h1>
-        </div>
+        </Link>
+    )
+}
+
+export function ArrowIcon({ className }: { className: string }) {
+    return (
+        <svg className={className} width="16" height="16" viewBox="0 0 16 16">
+            <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m3.75 7.25l4.5-4.5l4.5 4.5m-4.5 6V2.75" />
+        </svg>
     )
 }
 
@@ -185,8 +194,15 @@ export function SpotifyLogo({ className }: { className: string }) {
 
 export function TwitchLogo({ className }: { className: string }) {
     return (
-        <svg className={className} width="28" height="28" viewBox="0 0 512 512">
-            <path fill="#9146ff" d="M391.17 103.47h-38.63v109.7h38.63ZM285 103h-38.63v109.75H285ZM120.83 0L24.31 91.42v329.16h115.83V512l96.53-91.42h77.25L487.69 256V0Zm328.24 237.75l-77.22 73.12h-77.24l-67.6 64v-64h-86.87V36.58h308.93Z" />
+        <svg className={className} viewBox="0 0 16 16" width="28" height="28" fill="none">
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <path fill="#ffffff" d="M13 7.5l-2 2H9l-1.75 1.75V9.5H5V2h8v5.5z"></path>
+                <g fill="#9146ff"> <path d="M4.5 1L2 3.5v9h3V15l2.5-2.5h2L14 8V1H4.5zM13 7.5l-2 2H9l-1.75 1.75V9.5H5V2h8v5.5z"></path>
+                    <path d="M11.5 3.75h-1v3h1v-3zM8.75 3.75h-1v3h1v-3z"></path>
+                </g>
+            </g>
         </svg>
     )
 }

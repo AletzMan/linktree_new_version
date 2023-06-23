@@ -5,11 +5,13 @@ import Image from 'next/image'
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 import styles from './links.module.css'
 import { UserInfo, Network, TypeAlert, ConfigSnack, FormValue } from '@/app/types/types'
-import { AddIcon, ArrowBackIcon, CloseIcon, ColorIcon, DeleteIcon, EditIcon, LoadingIcon, Logo, SaveIcon, SettingsIcon, UpdateIcon } from '../constants/svg'
+import { AddIcon, ArrowBackIcon, ArrowIcon, CloseIcon, ColorIcon, DeleteIcon, EditIcon, LoadingIcon, Logo, SaveIcon, SettingsIcon, UpdateIcon } from '../constants/svg'
 import Link from 'next/link'
 import LinkNetworkEdit from '../components/ComboBox/LinkNetworkEdit'
 import SnackBar from '../components/SnackBar/SnackBar'
 import { Loading } from '../components/Loading/Loading'
+import { defaultSettings } from '../constants/constants'
+import Avatar from '../account/avatar'
 
 const emptyNetwork: Network = [{
     application: 0,
@@ -33,7 +35,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
     const [configSnack, setConfigSnack] = useState<ConfigSnack>({ message: '', type: TypeAlert.Info, open: false })
     const [supabaseWrite, setSupabaseWrite] = useState<boolean>(false)
     const [datalink, setDataLink] = useState<Network[0]>({ application: 0, url: '', username: '' })
-    const [userData, setUserData] = useState<UserInfo>({ fullName: '', username: '', avatar_url: '', website: '', links: emptyNetwork, settings: emptySettings })
+    const [userData, setUserData] = useState<UserInfo>({ id: '', fullName: '', username: '', avatar_url: '', website: '', links: emptyNetwork, settings: emptySettings })
     const user = session?.user
 
     const getProfile = useCallback(async () => {
@@ -51,8 +53,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
             }
 
             if (data) {
-                const imgURL = session?.user?.user_metadata !== null ? session?.user.user_metadata.avatar_url : data?.avatar_url
-                setUserData({ fullName: data?.full_name, username: data?.username, avatar_url: imgURL, website: data?.website, links: data?.links, settings: data?.settings })
+                setUserData({ id: userData.id, fullName: data?.full_name, username: data?.username, avatar_url: data?.avatar_url, website: data?.website, links: data?.links, settings: data?.settings || defaultSettings })
             }
         } catch (error) {
             alert('Error descargando los datos!')
@@ -83,6 +84,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
         }
         prevLinks.push(newLink)
         const newUserInfo: UserInfo = {
+            id: userData.id,
             fullName: userData.fullName,
             username: userData.username,
             avatar_url: userData.avatar_url,
@@ -102,6 +104,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
         prevLinks[viewModal.index].url = datalink.url
         prevLinks[viewModal.index].username = datalink.username
         const newUserInfo: UserInfo = {
+            id: userData.id,
             fullName: userData.fullName,
             username: userData.username,
             avatar_url: userData.avatar_url,
@@ -145,6 +148,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
         const newLinks: Network = [...userData.links]
         const deleteLink = newLinks.filter(link => link.application !== newLinks[index].application)
         const newUserInfo: UserInfo = {
+            id: userData.id,
             fullName: userData.fullName,
             username: userData.username,
             avatar_url: userData.avatar_url,
@@ -210,7 +214,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
             if (data.length > 0) {
                 setConfigSnack({ message: 'Configuración actualizada', type: TypeAlert.Success, open: true })
                 setOpen(true)
-                setUserData({ fullName: data[0]?.full_name, username: data[0]?.username, avatar_url: data[0].avatar_url, website: data[0]?.website, links: data[0]?.links, settings: data[0]?.settings })
+                setUserData({ id: data[0]?.id, fullName: data[0]?.full_name, username: data[0]?.username, avatar_url: data[0].avatar_url, website: data[0]?.website, links: data[0]?.links, settings: data[0]?.settings })
 
             }
         }
@@ -225,14 +229,11 @@ export default function EditLinks({ session }: { session: Session | null }) {
                     <Link className={styles.card__backbutton} href='/account'>
                         <ArrowBackIcon className='' />
                     </Link>
-                    <Logo />
+                    <Logo className='' />
                     <div className={styles.card__container}>
                         <h2 className={styles.card__username}>{userData.username}</h2>
-                        <div className={styles.card__containerPhoto}>
-                            <div className={styles.card__picture}>
-                                <Image className={styles.card__photo} src={`${userData.avatar_url}`} width={35} height={35} alt={`avatar from ${userData.fullName}`} />
-                            </div>
-                        </div>
+                        <Avatar size={40} uid={userData?.id} url={userData?.avatar_url} onUpload={() => null} settings={userData?.settings} isEdit={false} />
+
                     </div>
                 </nav>
                 <div className={styles.link__buttons}>
@@ -259,6 +260,11 @@ export default function EditLinks({ session }: { session: Session | null }) {
                             <button className={styles.link__settingsSave} type='submit'>Guardar</button>
                         </form>}
                 </div>
+                {!userData.links &&
+                    <div className={styles.emptyLink}>
+                        <ArrowIcon className={styles.emptyLink__icon} />
+                        <span className={styles.emptyLink__message}>Agrega enlaces de tus redes a tu perfil</span>
+                    </div>}
                 <div className={`${styles.card__link} ${styles.link}`}>
 
                     {userData?.links?.map((link, index) => (
@@ -273,6 +279,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
                         </div>
                     ))}
                 </div>
+
                 {viewModal.view &&
                     <section className={styles.modaladd}>
                         <h3 className={styles.modaladd__title}>{viewModal.mode === 0 ? 'Agregar Link' : 'Editar Link'}</h3>

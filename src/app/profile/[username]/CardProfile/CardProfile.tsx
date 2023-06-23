@@ -23,11 +23,14 @@ const emptySettings: FormValue = {
 import { UserInfo } from "@/app/types/types"
 import { LinkProfile } from "./LinkProfile"
 import { Loading } from "@/app/components/Loading/Loading"
+import { NoFoundProfile } from "./NoFoundProfile"
+import { Logo } from "@/app/constants/svg"
+import Avatar from "@/app/account/avatar"
 
 export function CardProfile({ username }: { username: string }) {
     const supabase = createClientComponentClient<Database>()
     const [loading, setLoading] = useState(true)
-    const [userData, setUserData] = useState<UserInfo>({ fullName: '', username: '', avatar_url: '', website: '', links: emptyLinks, settings: emptySettings })
+    const [userData, setUserData] = useState<UserInfo>({ id: '', fullName: '', username: '', avatar_url: '', website: '', links: emptyLinks, settings: emptySettings })
 
     useEffect(() => {
         const getProfile = async () => {
@@ -36,7 +39,7 @@ export function CardProfile({ username }: { username: string }) {
 
                 let { data, error, status } = await supabase
                     .from('profiles')
-                    .select(`full_name, username, website, avatar_url, links, settings`)
+                    .select(`id, full_name, username, website, avatar_url, links, settings`)
                     .eq('username', username)
                     .single()
 
@@ -44,7 +47,7 @@ export function CardProfile({ username }: { username: string }) {
                     throw error
                 }
                 if (data) {
-                    setUserData({ fullName: data?.full_name, username: data?.username, avatar_url: data?.avatar_url, website: data?.website, links: data?.links, settings: data?.settings })
+                    setUserData({ id: data?.id, fullName: data?.full_name, username: data?.username, avatar_url: data?.avatar_url, website: data?.website, links: data?.links, settings: data?.settings })
                 }
             } catch (error) {
                 alert('Error descargando los datos!')
@@ -61,20 +64,19 @@ export function CardProfile({ username }: { username: string }) {
             {!loading && userData.fullName !== '' &&
                 <div className={styles.card} style={{ backgroundColor: `${userData?.settings.backgroundColor}` }}>
                     <h1 className={styles.card__title} style={{ color: `${userData?.settings.fontColor}` }}>PERFIL</h1>
-                    <div className={styles.card__picture} style={{ borderColor: `${userData?.settings.fontHighColor}` }}>
-                        <div className={styles.card__photo}>
-                            <img className={styles.card__image} src={userData?.avatar_url} alt={`imagen de perfil de ${userData?.fullName}`} />
-                        </div>
-                    </div>
+                    <Avatar uid={userData?.id} url={userData?.avatar_url} size={120}
+                        onUpload={() => null}
+                        settings={userData?.settings} isEdit={false} />
                     <h2 className={styles.card__fullname} style={{ color: `${userData?.settings.fontColor}` }}>{userData?.fullName}</h2>
                     <span className={styles.card__username} style={{ color: `${userData?.settings.fontHighColor}` }}>{userData?.username}</span>
                     <p className={styles.card__description} style={{ color: `${userData?.settings.fontColor}AA` }}>{userData?.website}</p>
-                    {userData?.links.map(link => (
+                    {userData?.links?.map(link => (
                         <LinkProfile key={crypto.randomUUID()} link={link} settings={userData?.settings} />
                     ))}
+                    <Logo className={styles.logo} />
                 </div>}
             {!loading && userData.fullName === '' &&
-                <div>PERFIL NO EXISTE</div>
+                <NoFoundProfile username={username} />
             }
             {loading && <Loading />}
         </section>
