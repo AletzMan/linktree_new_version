@@ -10,9 +10,9 @@
   align-items: center;
   gap: 0.5em;
   padding: 0.4em 1.5em;
-  background-color: #cdcdcd10;
+  background-color: var(--terciaryColor);
   color: var(--fontColor);
-  border: none;
+  border: 1px solid transparent;
   max-width: 20em;
   align-self: center;
   border-radius: 0.2em;
@@ -22,13 +22,14 @@
 }
 
 .button:hover {
-  border-color: transparent;
-  background-color: #cdcdcd30;
+  border-color: var(--buttonColor);
+  background-color: var(--buttonColor);
 }
 
 .button > svg {
   width: 2em;
   height: 2em;
+  border-radius: 0.3em;
 }
 
 .input {

@@ -2,9 +2,14 @@
     padding: 1em;
     border-radius: 0.2em;
     width: 100%;
+    height: calc(100vh - 4em);
     max-width: 30em;
     margin: 0 auto;
     background-color: var(--primaryColor);
+
+    @media (max-width: 500px) {
+        height: 100vh;
+    }
 }
 
 .card {
@@ -14,6 +19,8 @@
     background-color: var(--backgroundColor);
     padding: 0.5em 1em;
     width: 100%;
+    height: 100%;
+    overflow-y: auto;
 
     &__title {
         margin: 0 0 1em 0;
@@ -48,6 +55,7 @@
     &__fullname {
         margin: 1em 0 0.25em 0;
         font-size: 1.7em;
+        text-align: center;
     }
 
     &__username {
@@ -61,6 +69,37 @@
         font-size: 0.83em;
     }
 
+}
+
+.linksContainer {
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: #888;
+    padding: 0.5em;
+
+
+    &::-webkit-scrollbar {
+        width: 7px;
+        /* Ancho de la scrollbar */
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--buttonColor);
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: var(--secondaryColor);
+        /* Color de la pista */
+    }
+
+    @media (max-width: 500px) {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        gap: 0.2em;
+    }
 }
 
 .link {
@@ -77,6 +116,15 @@
     margin: 0.5em 0 0 0;
     padding: 0.5em 0.5em 0.5em 1em;
     transition: all 0.15s ease-in-out;
+
+    @media (max-width: 500px) {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.4em;
+        width: 7em;
+        margin: 0em 0 0 0;
+        padding: 0.2em 0.2em 0.2em 0.5em;
+    }
 
     &:hover {
         //filter: brightness(110%);
@@ -95,10 +143,19 @@
         width: 1.8em;
         transition: all 0.25s ease-in-out;
         height: 1.8em;
+
+        @media (max-width: 500px) {
+            display: none;
+        }
     }
 
     &__name {
         font-weight: 600;
+
+        @media (max-width: 500px) {
+            font-size: 0.75em;
+            text-align: center;
+        }
     }
 
     &__username {
@@ -107,6 +164,10 @@
         background-color: transparent;
         padding: 0.2em 0.4em;
         border-radius: 0.5em;
+
+        @media (max-width: 500px) {
+            display: none;
+        }
     }
 
     &__logo {
@@ -114,7 +175,14 @@
         align-items: center;
         justify-content: center;
         padding: 0.2em;
+        width: 1.5em;
+        height: 1.5em;
         border-radius: 0.5em;
+
+        @media (max-width: 500px) {
+            width: 2em;
+            height: 2em;
+        }
     }
 }
 
