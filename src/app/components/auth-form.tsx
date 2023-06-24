@@ -42,7 +42,7 @@ export default function AuthForm() {
             }}
             showLinks={false}
             providers={['google', 'github']}
-            redirectTo="http://localhost:3000/auth/callback"
+            redirectTo="http://linktree-new-version.vercel.app/auth/callback"
         />
     )
 }
