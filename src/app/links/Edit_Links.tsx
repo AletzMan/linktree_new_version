@@ -123,7 +123,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
 
     useEffect(() => {
         if (supabaseWrite) {
-            //UpdateLinks()
+            UpdateLinks()
         }
     }, [userData.links])
 
@@ -151,11 +151,13 @@ export default function EditLinks({ session }: { session: Session | null }) {
             setConfigSnack({ message: error.message, type: TypeAlert.Error, open: true })
         } else {
             if (data.length > 0) {
-                setConfigSnack({ message: viewModal.mode === 0 ? 'Link agregado correctamente' : 'Actualizado correctamente', type: TypeAlert.Success, open: true })
+                setConfigSnack({ message: viewModal.mode === 0 ? responseDialog === "OK" ? 'Enlace eliminado correctamente' : 'Enlace agregado correctamente' : 'Enlace actualizado correctamente', type: TypeAlert.Success, open: true })
                 setOpen(true)
             }
         }
         setSupabaseWrite(false)
+        setResponseDialog('')
+
         return error
     }
 
@@ -180,7 +182,6 @@ export default function EditLinks({ session }: { session: Session | null }) {
                 links: deleteLink as Network,
                 settings: userData.settings
             }
-            setResponseDialog('')
             setUserData(newUserInfo)
         }
     }, [openDialog])
@@ -199,7 +200,12 @@ export default function EditLinks({ session }: { session: Session | null }) {
             setOpen(true)
             setConfigSnack({ message: 'El campo de URL está vacío', type: TypeAlert.Warning, open: true })
             return
-        } else {
+        } else if (datalink.username === '') {
+            setOpen(true)
+            setConfigSnack({ message: 'El nombre de usuario está vacío', type: TypeAlert.Warning, open: true })
+            return
+        }
+        else {
             //setOpen(true)
             if (viewModal.mode === 0) {
                 AddLink()
@@ -207,6 +213,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
             } else {
                 EditLink()
             }
+            setViewModal({ view: false, mode: 0, index: 0 })
         }
     }
 
@@ -356,7 +363,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
 
                     {userData?.links?.map((link, index) => (
                         <div key={crypto.randomUUID()} className={styles.link__network}>
-                            <LinkNetworkEdit typeLink={link} disabled setDataLink={setDataLink} />
+                            <LinkNetworkEdit typeLink={link} disabled setDataLink={setDataLink} isEdit={false} currentNetworks={userData?.links} />
                             <button className={styles.link__editButton} onClick={() => HandleEditLink(index)} title='Editar'>
                                 <EditIcon className={styles.link__deleteIcon} />
                             </button>
@@ -371,7 +378,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
                     <section className={styles.modaladd}>
                         <h3 className={styles.modaladd__title}>{viewModal.mode === 0 ? 'Agregar Link' : 'Editar Link'}</h3>
                         <div className={styles.modaladd__link}>
-                            <LinkNetworkEdit typeLink={datalink} disabled={false} setDataLink={setDataLink} />
+                            <LinkNetworkEdit typeLink={datalink} disabled={false} setDataLink={setDataLink} isEdit={viewModal.mode !== 0} currentNetworks={userData.links} />
                             <div className={styles.modaladd__buttons}>
                                 <button className={styles.modaladd__button} onClick={() => HandleAddLink(false)} >
                                     Cancelar

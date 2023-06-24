@@ -3,37 +3,48 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { ChangeEvent, ChangeEventHandler, FC, useState } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { SocialNetworks } from '@/app/constants/constants';
-import { Input, TextField } from '@mui/material';
-import styles from './linkedit.module.css'
-import { LinkNetworkEditProps, Network } from '@/app/types/types';
+import { Input } from '@mui/material';
+import { LinkNetworkEditProps, Network, SocialNetworkType } from '@/app/types/types';
 
 
 
-export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, setDataLink }) => {
-    //const [application, setApplication] = useState<number>(typeLink.application);
-    //const [url, setUrl] = useState<string>(typeLink.url)
+export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, setDataLink, currentNetworks, isEdit }) => {
 
     const handleChange = (event: SelectChangeEvent) => {
-        //setApplication(parseInt(event.target.value))
         setDataLink({ application: parseInt(event.target.value), url: typeLink.url, username: typeLink.username })
     };
 
     const HandleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
-        //setUrl(event.target.value)
         setDataLink({ application: typeLink.application, url: event.target.value, username: typeLink.username })
 
     }
 
     const HandleChangeInputUsername = (event: ChangeEvent<HTMLInputElement>) => {
-        //setUrl(event.target.value)
         setDataLink({ application: typeLink.application, url: typeLink.url, username: event.target.value })
 
     }
 
-    //console.log(application)
-    //console.log(SocialNetworks.find(network => network.value === application))
+
+    function SelectAvailableNetwork(array1: SocialNetworkType[], array2: Network[0][]): SocialNetworkType[] {
+        let avtiveAplications: number[]
+
+        if (isEdit) {
+            avtiveAplications = array2
+                .filter((element) => element.application !== typeLink.application)
+                .map((element) => element.application);
+        } else {
+            avtiveAplications = array2.map((element) => element.application)
+        }
+
+        const newArray = array1.filter((element) => !avtiveAplications.includes(element.value))
+
+        return newArray
+    }
+
+    const availableNetwork = SelectAvailableNetwork(SocialNetworks, currentNetworks)
+
 
     return (
         <>
@@ -118,7 +129,10 @@ export const LinkNetworkEdit: FC<LinkNetworkEditProps> = ({ typeLink, disabled, 
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    {SocialNetworks.map(network => (
+                    {disabled && SocialNetworks.map(network => (
+                        <MenuItem key={crypto.randomUUID()} value={network.value}>{network.logo}{network.name}</MenuItem>
+                    ))}
+                    {!disabled && availableNetwork.map(network => (
                         <MenuItem key={crypto.randomUUID()} value={network.value}>{network.logo}{network.name}</MenuItem>
                     ))}
                 </Select>
