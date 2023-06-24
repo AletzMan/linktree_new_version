@@ -1,7 +1,7 @@
-import { FormValue } from "../types/types";
+import { FormValue, SocialNetworkType } from "../types/types";
 import { DevianLogo, DiscordLogo, DribbleLogo, FacebookLogo, FlickrLogo, InstagramLogo, LinkedInLogo, NullIcon, PinterestLogo, QuoraLogo, RedditLogo, SkypeLogo, SnapchatLogo, SoundCloudLogo, SpotifyLogo, SteamLogo, TelegramLogo, TikTokLogo, TumblrLogo, TwitchLogo, TwitterLogo, VimeoLogo, WhatsAppLogo, YoutubeLogo } from "./svg";
 
-export const SocialNetworks = [
+export const SocialNetworks: SocialNetworkType[] = [
     {
         name: 'Seleccione una aplicación',
         logo: <NullIcon className="" />,

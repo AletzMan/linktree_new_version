@@ -28,10 +28,22 @@ export type ConfigSnack = {
     type: TypeAlert
 }
 
+export type SocialNetworkType = {
+    name: string,
+    logo: JSX.Element,
+    value: number,
+    urlHolder: string,
+    color1: string,
+    color2: string,
+    color3: string,
+}
+
 
 export type LinkNetworkEditProps = {
     typeLink: Network[0],
     disabled: boolean,
+    isEdit: boolean,
+    currentNetworks: Network,
     setDataLink: React.Dispatch<React.SetStateAction<Network[0]>>,
 };
 
