@@ -42,6 +42,12 @@ export type SnackBarStatus = {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
+export type AlertDialogStatus = {
+    setResponseDialog: React.Dispatch<React.SetStateAction<string>>,
+    openDialog: OpenDialog,
+    setOpenDialog: React.Dispatch<React.SetStateAction<OpenDialog>>,
+}
+
 export type FormValue = {
     backgroundColor: FormDataEntryValue | null,
     backgroundColorSecondary: FormDataEntryValue | null,
@@ -49,4 +55,15 @@ export type FormValue = {
     fontHighColor: FormDataEntryValue | null,
     radiusLink: FormDataEntryValue | null,
     bubbleEffect: FormDataEntryValue | null,
+}
+
+export type ResponseDialog = {
+    response: string,
+    linkSelected: number
+}
+
+export type OpenDialog = {
+    open: boolean,
+    linkSelected: number,
+    application: number
 }

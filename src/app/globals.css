@@ -6,13 +6,29 @@
   --buttonColor: #e7a71d;
   --fontColor: #f1f1f1;*/
 
-  --backgroundColor: #323e45;
+  /*--backgroundColor: #323e45;
   --primaryColor: #3a4e51;
   --secondaryColor: #5a786f;
   --terciaryColor: #8ba88e;
   --buttonColor: #58a760;
   --fontColor: #e7e7e7;
-  --fontAltColor: #54e663;
+  --fontAltColor: #54e663;*/
+
+  /*--backgroundColor: #17171b;
+  --primaryColor: #21212b;
+  --secondaryColor: #8d8dac;
+  --terciaryColor: #a6a6ae;
+  --buttonColor: #ffb53a;
+  --fontColor: #fcfcfe;
+  --fontAltColor: #ffa631;*/
+
+  --backgroundColor: #131313;
+  --primaryColor: #21212b;
+  --secondaryColor: #073242;
+  --terciaryColor: #15566e;
+  --buttonColor: #11ace2;
+  --fontColor: #fefefe;
+  --fontAltColor: #52e5ff;
 }
 
 * {
@@ -26,4 +42,13 @@ body {
   background-color: var(--backgroundColor);
   padding: 2em;
   height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 0em;
+  }
 }

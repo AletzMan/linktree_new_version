@@ -46,7 +46,6 @@ export default function AccountForm({ session }: { session: Session | null }) {
             if (error && status !== 406) {
                 throw error
             }
-            console.log(data)
             if (data) {
                 setFullname(data.full_name)
                 setUsername(data.username)
@@ -109,80 +108,81 @@ export default function AccountForm({ session }: { session: Session | null }) {
     }
 
     return (
-        <div className={`form-widget `} style={{ backgroundColor: `${settings.backgroundColorSecondary}`, padding: '1em' }}>
-            {!loading && <div className={styles.form} style={{ backgroundColor: `${settings.backgroundColor}` }}>
-                <Link className={styles.form__ViewButton} href={`/profile/[username]`}
-                    as={`/profile/${username}`} title='Ver vista de perfil'>
-                    <ViewIcon className={styles.form__ViewIcon} />
-                </Link>
-                <h1 className={styles.form__title} style={{ color: `${settings.fontColor}` }}>Perfil</h1>
-                {<Avatar
-                    uid={user?.id || ''}
-                    url={avatar_url}
-                    size={120}
-                    onUpload={(url) => {
-                        setAvatarUrl(url)
-                        updateProfile({ fullname, username, website, avatar_url: url })
-                    }}
-                    settings={settings}
-                    isEdit={editProfile}
-                />}
-
-                <div className={styles.form__container}>
-                    {!editProfile && <h2 className={styles.form__containerName} style={{ color: `${settings.fontColor}` }}>{fullname}</h2>}
-                    {editProfile && <input
-                        className={styles.form__input}
-                        id="fullName"
-                        type="text"
-                        value={fullname || ''}
-                        onChange={(e) => setFullname(e.target.value)}
-                    />}
-                </div>
-                <div className={styles.form__container}>
-                    {!editProfile && <h3 className={styles.form__username} style={{ color: `${settings.fontHighColor}` }}>{username}</h3>}
-                    {editProfile && <input
-                        className={styles.form__input}
-                        id="username"
-                        type="text"
-                        value={username || ''}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />}
-                </div>
-                <div className={styles.form__container}>
-                    <span className={styles.form__email} style={{ color: `${settings.fontColor}95` }}>{session?.user.email}</span>
-                    {/*<input className={styles.form__input} id="email" type="text" value={session?.user.email} disabled />*/}
-                </div>
-
-
-                <div className={styles.form__container}>
-                    {!editProfile && <p className={styles.form__description} style={{ color: `${settings.fontColor}BC` }}>{website || ''}</p>}
-                    {editProfile && <textarea
-                        className={styles.form__textarea}
-                        id="website"
-                        value={website || ''}
-                        onChange={(e) => setWebsite(e.target.value)}
-                    />}
-                </div>
-                <form className={styles.formButtons} action="/auth/signout" method="post">
-                    <div className={`${styles.containerButton} ${!username && styles.containerButtonAlert} ${editProfile && styles.containerButtonPressed}`} onClick={() => updateProfile({ fullname, username, website, avatar_url })}>
-                        {!editProfile && <UserIcon className={styles.buttonIcon} />}
-                        {editProfile && <SaveIcon className={styles.buttonIcon} />}
-                        <span className={styles.buttonTitle}>{!editProfile ? 'Editar mi perfil' : 'Guardar'}</span>
-                        <span className={styles.buttonSubtitle}>{!editProfile ? 'Actualiza tu información personal' : 'Guardar las modificaciones realizadas.'}</span>
-                    </div>
-                    <Link className={styles.containerButton} href={'/links'}>
-                        <SettingsIcon className={styles.buttonIcon} />
-                        <span className={styles.buttonTitle}>Configuración</span>
-                        <span className={styles.buttonSubtitle}>Modifica, añade tus enlaces y personaliza la apariencia de tu tarjeta</span>
+        <div className={`form-widget `} style={{ backgroundColor: `${settings.backgroundColorSecondary}`, padding: '1em', height: '100%' }}>
+            {!loading &&
+                <div className={styles.form} style={{ backgroundColor: `${settings.backgroundColor}` }}>
+                    <Link className={styles.form__ViewButton} href={`/profile/[username]`}
+                        as={`/profile/${username}`} title='Ver vista de perfil'>
+                        <ViewIcon className={styles.form__ViewIcon} />
                     </Link>
-                    <div className={styles.containerButton}>
-                        <button className={styles.buttonForm} type="submit"> </button>
-                        <SignOutIcon className={styles.buttonIcon} />
-                        <span className={styles.buttonTitle}>Cerrar sesión</span>
-                        <span className={styles.buttonSubtitle}>Salir de tu cuenta</span>
+                    <h1 className={styles.form__title} style={{ color: `${settings.fontColor}` }}>Perfil</h1>
+                    {<Avatar
+                        uid={user?.id || ''}
+                        url={avatar_url}
+                        size={120}
+                        onUpload={(url) => {
+                            setAvatarUrl(url)
+                            updateProfile({ fullname, username, website, avatar_url: url })
+                        }}
+                        settings={settings}
+                        isEdit={editProfile}
+                    />}
+
+                    <div className={styles.form__container}>
+                        {!editProfile && <h2 className={styles.form__containerName} style={{ color: `${settings.fontColor}` }}>{fullname}</h2>}
+                        {editProfile && <input
+                            className={styles.form__input}
+                            id="fullName"
+                            type="text"
+                            value={fullname || ''}
+                            onChange={(e) => setFullname(e.target.value)}
+                        />}
                     </div>
-                </form>
-            </div>}
+                    <div className={styles.form__container}>
+                        {!editProfile && <h3 className={styles.form__username} style={{ color: `${settings.fontHighColor}` }}>{username}</h3>}
+                        {editProfile && <input
+                            className={styles.form__input}
+                            id="username"
+                            type="text"
+                            value={username || ''}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />}
+                    </div>
+                    <div className={styles.form__container}>
+                        <span className={styles.form__email} style={{ color: `${settings.fontColor}95` }}>{session?.user.email}</span>
+                        {/*<input className={styles.form__input} id="email" type="text" value={session?.user.email} disabled />*/}
+                    </div>
+
+
+                    <div className={styles.form__container}>
+                        {!editProfile && <p className={styles.form__description} style={{ color: `${settings.fontColor}BC` }}>{website || ''}</p>}
+                        {editProfile && <textarea
+                            className={styles.form__textarea}
+                            id="website"
+                            value={website || ''}
+                            onChange={(e) => setWebsite(e.target.value)}
+                        />}
+                    </div>
+                    <form className={styles.formButtons} action="/auth/signout" method="post">
+                        <div className={`${styles.containerButton} ${!username && styles.containerButtonAlert} ${editProfile && styles.containerButtonPressed}`} onClick={() => updateProfile({ fullname, username, website, avatar_url })}>
+                            {!editProfile && <UserIcon className={styles.buttonIcon} />}
+                            {editProfile && <SaveIcon className={styles.buttonIcon} />}
+                            <span className={styles.buttonTitle}>{!editProfile ? 'Editar perfil' : 'Guardar'}</span>
+                            <span className={styles.buttonSubtitle}>{!editProfile ? 'Actualiza tu información personal' : 'Guardar las modificaciones realizadas.'}</span>
+                        </div>
+                        <Link className={styles.containerButton} href={'/links'}>
+                            <SettingsIcon className={styles.buttonIcon} />
+                            <span className={styles.buttonTitle}>Configuración</span>
+                            <span className={styles.buttonSubtitle}>Modifica, añade tus enlaces y personaliza la apariencia de tu tarjeta</span>
+                        </Link>
+                        <div className={styles.containerButton}>
+                            <button className={styles.buttonForm} type="submit"> </button>
+                            <SignOutIcon className={styles.buttonIcon} />
+                            <span className={styles.buttonTitle}>Cerrar sesión</span>
+                            <span className={styles.buttonSubtitle}>Salir de tu cuenta</span>
+                        </div>
+                    </form>
+                </div>}
             {<SnackBar message={configSnack?.message} type={configSnack.type} open={open} setOpen={setOpen} />}
             {loading && <Loading />}
         </div>

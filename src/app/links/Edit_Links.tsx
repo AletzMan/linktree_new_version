@@ -3,7 +3,7 @@ import { Database } from '@/app/types/supabase'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { ChangeEvent, FormEvent, MouseEvent, useCallback, useEffect, useState } from 'react'
 import styles from './links.module.css'
-import { UserInfo, Network, TypeAlert, ConfigSnack, FormValue } from '@/app/types/types'
+import { UserInfo, Network, TypeAlert, ConfigSnack, FormValue, ResponseDialog, OpenDialog } from '@/app/types/types'
 import { AddIcon, ArrowBackIcon, ArrowIcon, ColorIcon, DeleteIcon, EditIcon, Logo, ViewIcon, ViewOffIcon } from '../constants/svg'
 import Link from 'next/link'
 import LinkNetworkEdit from '../components/ComboBox/LinkNetworkEdit'
@@ -12,6 +12,7 @@ import { Loading } from '../components/Loading/Loading'
 import { defaultSettings } from '../constants/constants'
 import Avatar from '../account/avatar'
 import { PreviewLink } from './PreviewLink'
+import AlertDialog from '../components/Dialog/Dialog'
 
 const emptyNetwork: Network = [{
     application: 0,
@@ -32,6 +33,8 @@ export default function EditLinks({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
     const [loading, setLoading] = useState<boolean>(true)
     const [viewModal, setViewModal] = useState({ view: false, mode: 0, index: 0 })
+    const [openDialog, setOpenDialog] = useState<OpenDialog>({ open: false, linkSelected: 0, application: 0 });
+    const [responseDialog, setResponseDialog] = useState('');
     const [open, setOpen] = useState<boolean>(false)
     const [viewColorPicker, setViewColorPicker] = useState<boolean>(false)
     const [previewSettings, setPreviewSettings] = useState<FormValue>(defaultSettings)
@@ -101,8 +104,6 @@ export default function EditLinks({ session }: { session: Session | null }) {
     }
 
     const EditLink = () => {
-        console.log(datalink.application)
-        console.log(viewModal.index)
         setSupabaseWrite(true)
         const prevLinks: Network = [...userData.links]
         prevLinks[viewModal.index].application = datalink.application
@@ -122,7 +123,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
 
     useEffect(() => {
         if (supabaseWrite) {
-            UpdateLinks()
+            //UpdateLinks()
         }
     }, [userData.links])
 
@@ -158,21 +159,31 @@ export default function EditLinks({ session }: { session: Session | null }) {
         return error
     }
 
-    const HandleDeleteLink = (index: number) => {
-        setSupabaseWrite(true)
-        const newLinks: Network = [...userData.links]
-        const deleteLink = newLinks.filter(link => link.application !== newLinks[index].application)
-        const newUserInfo: UserInfo = {
-            id: userData.id,
-            fullName: userData.fullName,
-            username: userData.username,
-            avatar_url: userData.avatar_url,
-            website: userData.website,
-            links: deleteLink as Network,
-            settings: userData.settings
-        }
-        setUserData(newUserInfo)
+    const HandleDeleteLink = (index: number, application: number) => {
+        setOpenDialog({ open: true, linkSelected: index, application: application })
+
     }
+
+    useEffect(() => {
+        if (responseDialog === 'OK') {
+            console.log('PASO')
+            setSupabaseWrite(true)
+            const newLinks: Network = [...userData.links]
+            console.log(newLinks)
+            const deleteLink = newLinks.filter(link => link.application !== newLinks[openDialog.linkSelected].application)
+            const newUserInfo: UserInfo = {
+                id: userData.id,
+                fullName: userData.fullName,
+                username: userData.username,
+                avatar_url: userData.avatar_url,
+                website: userData.website,
+                links: deleteLink as Network,
+                settings: userData.settings
+            }
+            setResponseDialog('')
+            setUserData(newUserInfo)
+        }
+    }, [openDialog])
 
     const HandleEditLink = (index: number) => {
         setDataLink(userData.links[index])
@@ -210,7 +221,6 @@ export default function EditLinks({ session }: { session: Session | null }) {
             radiusLink: colorsData.get('radius'),
             bubbleEffect: colorsData.get('bubbleEffect')
         }
-        console.log(colors)
         UpdateSettings(colors)
     }
 
@@ -233,7 +243,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
                 setConfigSnack({ message: 'Configuración actualizada', type: TypeAlert.Success, open: true })
                 setOpen(true)
                 setUserData({ id: data[0]?.id, fullName: data[0]?.full_name, username: data[0]?.username, avatar_url: data[0].avatar_url, website: data[0]?.website, links: data[0]?.links, settings: data[0]?.settings })
-
+                setViewColorPicker(false)
             }
         }
         return error
@@ -350,7 +360,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
                             <button className={styles.link__editButton} onClick={() => HandleEditLink(index)} title='Editar'>
                                 <EditIcon className={styles.link__deleteIcon} />
                             </button>
-                            <button className={styles.link__deleteButton} onClick={() => HandleDeleteLink(index)} title='Eliminar'>
+                            <button className={styles.link__deleteButton} onClick={() => HandleDeleteLink(index, link.application)} title='Eliminar'>
                                 <DeleteIcon className={styles.link__deleteIcon} />
                             </button>
                         </div>
@@ -374,6 +384,7 @@ export default function EditLinks({ session }: { session: Session | null }) {
                     </section>}
             </>}
             {<SnackBar message={configSnack?.message} type={configSnack.type} open={open} setOpen={setOpen} />}
+            {<AlertDialog setOpenDialog={setOpenDialog} setResponseDialog={setResponseDialog} openDialog={openDialog} />}
             {loading && <Loading />}
         </section >
     )

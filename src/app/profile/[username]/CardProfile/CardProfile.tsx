@@ -66,9 +66,11 @@ export function CardProfile({ username }: { username: string }) {
                     <h2 className={styles.card__fullname} style={{ color: `${userData?.settings.fontColor}` }}>{userData?.fullName}</h2>
                     <span className={styles.card__username} style={{ color: `${userData?.settings.fontHighColor}` }}>{userData?.username}</span>
                     <p className={styles.card__description} style={{ color: `${userData?.settings.fontColor}AA` }}>{userData?.website}</p>
-                    {userData?.links?.map(link => (
-                        <LinkProfile key={crypto.randomUUID()} link={link} settings={userData?.settings} />
-                    ))}
+                    <div className={styles.linksContainer}>
+                        {userData?.links?.map(link => (
+                            <LinkProfile key={crypto.randomUUID()} link={link} settings={userData?.settings} />
+                        ))}
+                    </div>
                     <Logo className={styles.logo} />
                 </div>}
             {!loading && userData.fullName === '' &&
